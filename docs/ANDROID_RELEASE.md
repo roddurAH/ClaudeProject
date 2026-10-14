@@ -15,9 +15,9 @@ Play only accepts app bundles for new apps; an `.apk` is still useful to install
 ## Test APK for your own phone (no Play Store)
 
 Every push that changes `mobile/` runs the **Android test APK** workflow on GitHub ([`.github/workflows/android-test-apk.yml`](../.github/workflows/android-test-apk.yml)).
-It builds `krishi-sathi-test.apk` and publishes it as the **`android-test` pre-release**:
+It builds two APKs and publishes them as the **`android-test` pre-release**: `krishi-sathi-test-arm64.apk` (about 20 MB, for 64-bit ARM phones, which is almost every phone sold in recent years) and `krishi-sathi-test.apk` (about 57 MB, works on every phone).
 
-1. On the phone, open the repository on GitHub → **Releases** → *Krishi Sathi – test APK* → tap `krishi-sathi-test.apk`.
+1. On the phone, open the repository on GitHub → **Releases** → *Krishi Sathi – test APK* → tap `krishi-sathi-test-arm64.apk` (if Android says it is not compatible, take `krishi-sathi-test.apk`).
 2. Open the download and allow **Install unknown apps** for your browser when Android asks.
 3. A newer test build is signed with a different throw-away key, so **uninstall the old test app first**.
 

@@ -60,14 +60,17 @@ jobs:
           KRISHI_ALLOW_HTTP: 'true'
           API_BASE_URL: ${{ inputs.api_base_url }}
         run: |
+          # Universal APK (every phone) and a smaller one for 64-bit ARM phones (almost all current phones)
           flutter build apk --release --dart-define=API_BASE_URL="$API_BASE_URL"
           cp build/app/outputs/flutter-apk/app-release.apk krishi-sathi-test.apk
-          ls -l krishi-sathi-test.apk
+          flutter build apk --release --split-per-abi --target-platform android-arm64 --dart-define=API_BASE_URL="$API_BASE_URL"
+          cp build/app/outputs/flutter-apk/app-arm64-v8a-release.apk krishi-sathi-test-arm64.apk
+          ls -l krishi-sathi-test*.apk
 
       - uses: actions/upload-artifact@v4
         with:
           name: krishi-sathi-test-apk
-          path: mobile/krishi-sathi-test.apk
+          path: mobile/krishi-sathi-test*.apk
           retention-days: 14
 
       - name: Publish as the "android-test" pre-release
@@ -75,7 +78,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release delete android-test --yes --cleanup-tag || true
-          gh release create android-test krishi-sathi-test.apk \
+          gh release create android-test krishi-sathi-test-arm64.apk krishi-sathi-test.apk \
             --prerelease --target "$GITHUB_SHA" \
             --title "Krishi Sathi – test APK (not for Google Play)" \
-            --notes "Built from ${GITHUB_REF_NAME} @ ${GITHUB_SHA::7}. Open this page on your Android phone, download krishi-sathi-test.apk and install it (allow 'Install unknown apps' for your browser). If an older test APK is installed, uninstall it first. See docs/ANDROID_RELEASE.md → 'Test APK'."
+            --notes "Built from ${GITHUB_REF_NAME} @ ${GITHUB_SHA::7}. Open this page on your Android phone and download krishi-sathi-test-arm64.apk (smaller, fits almost all current phones); if Android says the app is not compatible, use krishi-sathi-test.apk (works on every phone). Allow 'Install unknown apps' for your browser. Uninstall an older test APK first. See docs/ANDROID_RELEASE.md → 'Test APK'."
