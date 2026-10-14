@@ -47,17 +47,18 @@ class ApiClient {
   Future<ApiResponse> delete(String path, {Object? data}) => _send('DELETE', path, data: data);
 
   /// Multipart upload (used for question photos). Works on web and mobile.
+  /// [receiveTimeout] overrides the default for slow answers (the AI doctor).
   Future<ApiResponse> postMultipart(String path, Map<String, dynamic> fields,
-      {List<int>? fileBytes, String fileField = 'image', String fileName = 'photo.jpg'}) {
+      {List<int>? fileBytes, String fileField = 'image', String fileName = 'photo.jpg', Duration? receiveTimeout}) {
     final form = FormData.fromMap({
       ...fields..removeWhere((_, v) => v == null),
       if (fileBytes != null) fileField: MultipartFile.fromBytes(fileBytes, filename: fileName),
     });
-    return _send('POST', path, data: form);
+    return _send('POST', path, data: form, receiveTimeout: receiveTimeout);
   }
 
   Future<ApiResponse> _send(String method, String path,
-      {Map<String, dynamic>? query, Object? data, Map<String, String>? headers}) async {
+      {Map<String, dynamic>? query, Object? data, Map<String, String>? headers, Duration? receiveTimeout}) async {
     final bearer = token();
     final base = baseUrl().trim();
     if (base.isEmpty) {
@@ -69,7 +70,7 @@ class ApiClient {
         '${base.replaceAll(RegExp(r'/+$'), '')}$path',
         queryParameters: query?..removeWhere((_, v) => v == null),
         data: data,
-        options: Options(method: method, headers: {
+        options: Options(method: method, receiveTimeout: receiveTimeout, headers: {
           'Accept': 'application/json',
           'Accept-Language': language(),
           if (bearer != null) 'Authorization': 'Bearer $bearer',

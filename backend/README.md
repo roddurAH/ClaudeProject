@@ -38,8 +38,9 @@ Using XAMPP's Apache instead of `artisan serve`: point a virtual host's `Documen
 |---|---|
 | `php artisan migrate:fresh --seed` | Rebuild the database with reference **and demo** data |
 | `php artisan db:seed --class=ReferenceDataSeeder` | Reference data only (districts, knowledge base, markets): use for production |
+| `php artisan krishi:ai-check leaf.jpg` | Test the AI crop doctor with one photo (needs `ANTHROPIC_API_KEY`, see `../docs/AI_DOCTOR.md`) |
 | `php artisan krishi:export-content` | Copy the knowledge base + districts into `../mobile/assets/seed/` for offline first launch |
-| `php artisan test` | 70 tests on in-memory SQLite |
+| `php artisan test` | 83 tests on in-memory SQLite |
 | `DB_CONNECTION=mysql DB_DATABASE=krishi_sathi_test php artisan test` | Same tests on MySQL (create that database first) |
 | `./vendor/bin/pint` | Code style |
 

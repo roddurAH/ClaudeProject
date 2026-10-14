@@ -11,7 +11,7 @@
         ['Crops / problems', $stats['crops'].' / '.$stats['problems'], 'bi-flower1', 'success', Gate::allows('manage-content') ? route('admin.crops.index') : null],
         ['Answered questions', $stats['answered_questions'], 'bi-check2-circle', 'secondary', null],
         ['Active alerts', $stats['active_alerts'], 'bi-megaphone', 'danger', Gate::allows('manage-alerts') ? route('admin.alerts.index') : null],
-        ['Latest price date', $stats['last_price_date'] ? \Illuminate\Support\Carbon::parse($stats['last_price_date'])->format('d M Y') : '—', 'bi-calendar-event', 'dark', null],
+        ['AI answers today (≈ cost)', $stats['ai_today'].' · $'.number_format($stats['ai_cost_today'], 2), 'bi-robot', 'dark', Gate::allows('answer-questions') ? route('admin.ai.index') : null],
     ])
     @foreach($cards as [$label, $value, $icon, $color, $link])
         <div class="col-6 col-xl-3">

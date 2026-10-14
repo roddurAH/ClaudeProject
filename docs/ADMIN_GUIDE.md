@@ -30,6 +30,15 @@ Other actions: **Close (spam / duplicate)**, **Re-open**, **Hide from community*
 
 ![Answering a question](screenshots/admin-02-answer-question.jpg)
 
+### AI doctor review — AI ডাক্তার
+
+**Questions → AI doctor** shows what the AI told farmers, with the photo. Check especially:
+* **👎 Not helpful** – the farmer said the answer did not help;
+* **AI suggested an expert** – the AI was unsure;
+* **Sent to expert** – the farmer pressed "send to an expert"; the question is also in *Questions → Waiting*, with the AI's first answer inside.
+
+If the AI was wrong, correct it in your expert answer. If it keeps getting a problem wrong, improve that problem's symptoms in **Pests & diseases**: the AI reads them for every farmer. The page also shows the estimated AI cost today and this month (the exact bill is in the Anthropic console).
+
 ---
 
 ## 2. Entering daily market prices (data entry) — বাজারদর

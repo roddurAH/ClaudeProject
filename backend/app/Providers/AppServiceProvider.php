@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Ai\AnthropicModelClient;
+use App\Ai\DemoModelClient;
+use App\Ai\ModelClient;
 use App\Enums\Role;
 use App\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -15,7 +18,16 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        //
+        // AI crop doctor backend: Claude, or canned demo answers (KRISHI_AI_DRIVER=demo).
+        $this->app->bind(ModelClient::class, fn () => config('krishi.ai.driver') === 'demo'
+            ? new DemoModelClient
+            : new AnthropicModelClient(
+                apiKey: config('krishi.ai.api_key'),
+                model: config('krishi.ai.model'),
+                effort: config('krishi.ai.effort'),
+                maxTokens: (int) config('krishi.ai.max_tokens'),
+                timeoutSeconds: (int) config('krishi.ai.timeout_seconds'),
+            ));
     }
 
     public function boot(): void
@@ -64,6 +76,9 @@ class AppServiceProvider extends ServiceProvider
 
         // Each phone may ask 15 questions per hour – plenty for genuine use.
         RateLimiter::for('questions', fn (Request $request) => Limit::perHour(15)->by($request->user()?->id ?: $request->ip()));
+
+        // AI doctor: short bursts only; the daily allowance is checked in AiController.
+        RateLimiter::for('ai', fn (Request $request) => Limit::perMinute(5)->by($request->user()?->id ?: $request->ip()));
 
         RateLimiter::for('weather', fn (Request $request) => Limit::perMinute(30)->by($request->ip()));
 

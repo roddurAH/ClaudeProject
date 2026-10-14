@@ -17,5 +17,8 @@
     "(and :count more errors)": "(এবং আরও :countটি ভুল)",
     "PIN is incorrect.": "পিন সঠিক নয়।",
     "Staff accounts are removed by an administrator.": "স্টাফ অ্যাকাউন্ট শুধু অ্যাডমিন মুছতে পারেন।",
-    "Your account and all your data have been deleted.": "আপনার অ্যাকাউন্ট ও সব তথ্য মুছে ফেলা হয়েছে।"
+    "Your account and all your data have been deleted.": "আপনার অ্যাকাউন্ট ও সব তথ্য মুছে ফেলা হয়েছে।",
+    "The AI doctor is not available right now. Please ask an expert instead.": "AI ডাক্তার এখন চালু নেই। দয়া করে বিশেষজ্ঞকে প্রশ্ন করুন।",
+    "The AI doctor is busy. Please try again in a minute.": "AI ডাক্তার এখন ব্যস্ত। এক মিনিট পরে আবার চেষ্টা করুন।",
+    "You have used today's :limit AI questions. Try again tomorrow, or ask an expert.": "আজকের :limitটি AI প্রশ্ন শেষ হয়েছে। কাল আবার চেষ্টা করুন, অথবা বিশেষজ্ঞকে প্রশ্ন করুন।"
 }

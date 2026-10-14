@@ -9,6 +9,7 @@ import '../../core/widgets/speak_button.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/content.dart';
 import '../../state/settings_controller.dart';
+import '../ai_doctor/ai_doctor_screen.dart';
 import '../ask_expert/new_question_screen.dart';
 import 'crop_labels.dart';
 
@@ -65,6 +66,12 @@ class ProblemDetailScreen extends StatelessWidget {
           ],
           const SizedBox(height: 20),
           FilledButton.icon(
+            onPressed: () => push(context, AiDoctorScreen(cropId: crop.id)),
+            icon: const Icon(Icons.photo_camera),
+            label: Text(l10n.aiShowPhoto),
+          ),
+          const SizedBox(height: 8),
+          OutlinedButton.icon(
             onPressed: () => push(context, NewQuestionScreen(initialCropId: crop.id)),
             icon: const Icon(Icons.support_agent),
             label: Text(l10n.notSureAskExpert),

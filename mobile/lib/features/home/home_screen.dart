@@ -16,6 +16,7 @@ import '../../state/content_controller.dart';
 import '../../state/my_crops_controller.dart';
 import '../../state/reference_controller.dart';
 import '../../state/settings_controller.dart';
+import '../ai_doctor/ai_doctor_screen.dart';
 import '../articles/article_list_screen.dart';
 import '../ask_expert/ask_expert_screen.dart';
 import '../calculator/fertilizer_calculator_screen.dart';
@@ -139,6 +140,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   text: alert.body(lang),
                 ),
               ),
+            if (reference.meta?.aiEnabled ?? true) ...[
+              const _AiDoctorCard(),
+              const SizedBox(height: 10),
+            ],
             _WeatherCard(forecast: _forecast, districtName: reference.districtById(settings.districtId)?.name(lang)),
             if (_pendingQuestions > 0) ...[
               const SizedBox(height: 10),
@@ -159,6 +164,40 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 16),
             _HelplineButton(number: reference.helpline),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+/// The quickest way to help: photograph the sick plant (or just speak).
+class _AiDoctorCard extends StatelessWidget {
+  const _AiDoctorCard();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: () => push(context, const AiDoctorScreen()),
+        child: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(colors: [Color(0xFF00897B), Color(0xFF004D40)], begin: Alignment.topLeft, end: Alignment.bottomRight),
+          ),
+          padding: const EdgeInsets.fromLTRB(16, 14, 12, 14),
+          child: Row(children: [
+            const Text('📸', style: TextStyle(fontSize: 36)),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(l10n.aiDoctorTitle, style: const TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.w700)),
+                const SizedBox(height: 2),
+                Text(l10n.aiDoctorHomeDesc, style: const TextStyle(color: Colors.white, fontSize: 14)),
+              ]),
+            ),
+            const CircleAvatar(backgroundColor: Colors.white24, child: Icon(Icons.photo_camera, color: Colors.white)),
+          ]),
         ),
       ),
     );

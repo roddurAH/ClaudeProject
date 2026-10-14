@@ -856,6 +856,125 @@ class AppLocalizationsBn extends AppLocalizations {
   String get account => 'অ্যাকাউন্ট';
 
   @override
+  String get aiDoctorTitle => 'কৃষি ডাক্তার (AI)';
+
+  @override
+  String get aiDoctorHomeDesc => 'গাছের ছবি তুলুন বা বলুন – সাথে সাথে পরামর্শ';
+
+  @override
+  String get aiShowPhoto => 'AI-কে ছবি দেখান';
+
+  @override
+  String get aiIntroTitle => 'গাছের সমস্যা দেখান';
+
+  @override
+  String get aiIntroText =>
+      'অসুস্থ গাছের ছবি তুলুন বা গ্যালারি থেকে দিন। কী হয়েছে তা লিখুন, অথবা 🎤 চেপে মুখে বলুন।';
+
+  @override
+  String get aiDisclaimer =>
+      'AI ভুল করতে পারে। বড় সমস্যায় বিশেষজ্ঞকে জিজ্ঞেস করুন বা ১৬১২৩ নম্বরে (বিনামূল্যে) কল করুন।';
+
+  @override
+  String get aiCropOptional => 'ফসল (ঐচ্ছিক)';
+
+  @override
+  String get aiInputHint => 'কী সমস্যা? লিখুন, অথবা 🎤 চেপে বলুন';
+
+  @override
+  String get aiFollowUpHint => 'উত্তর দিন, অথবা নতুন ছবি দিন';
+
+  @override
+  String get aiSpeak => 'বলুন';
+
+  @override
+  String get aiStopListening => 'থামুন';
+
+  @override
+  String get aiListening => 'শুনছি… এখন বলুন';
+
+  @override
+  String get aiVoiceUnavailable =>
+      'এই ফোনে কথা বলে লেখা চালু নেই। দয়া করে লিখুন।';
+
+  @override
+  String get aiPhotoAdded => 'ছবি যুক্ত হয়েছে';
+
+  @override
+  String get aiThinking => 'আপনার গাছ দেখছি…';
+
+  @override
+  String get aiThinkingHint => 'সাধারণত ১০–৩০ সেকেন্ড লাগে।';
+
+  @override
+  String get aiOffline =>
+      'AI ডাক্তারের জন্য ইন্টারনেট লাগবে। চাইলে প্রশ্নটি বিশেষজ্ঞের জন্য রেখে দিন – ইন্টারনেট এলে নিজে থেকেই চলে যাবে।';
+
+  @override
+  String get aiSaveForExpert => 'বিশেষজ্ঞের জন্য রেখে দিন';
+
+  @override
+  String get aiDeclined =>
+      'AI এই প্রশ্নের উত্তর দিতে পারেনি। বিশেষজ্ঞকে পাঠান।';
+
+  @override
+  String get aiAnswerTitle => 'AI ডাক্তারের পরামর্শ';
+
+  @override
+  String get aiConfHigh => 'প্রায় নিশ্চিত';
+
+  @override
+  String get aiConfMedium => 'সম্ভাব্য';
+
+  @override
+  String get aiConfLow => 'নিশ্চিত নয়';
+
+  @override
+  String get aiAlsoPossible => 'এটাও হতে পারে';
+
+  @override
+  String get aiWhatToDo => 'এখন যা করবেন';
+
+  @override
+  String aiFullGuide(String name) {
+    return 'পুরো নির্দেশিকা: $name';
+  }
+
+  @override
+  String get aiNeedsExpert => 'এটি একজন বিশেষজ্ঞকে দেখানো ভালো।';
+
+  @override
+  String get aiSendToExpert => 'বিশেষজ্ঞকে পাঠান';
+
+  @override
+  String get aiSentToExpert =>
+      'বিশেষজ্ঞের কাছে পাঠানো হয়েছে। উত্তর পাবেন \'বিশেষজ্ঞকে প্রশ্ন\'-এ।';
+
+  @override
+  String get aiSentToExpertShort => '✓ বিশেষজ্ঞের কাছে পাঠানো হয়েছে';
+
+  @override
+  String get aiWasHelpful => 'উত্তরটি কি কাজে লেগেছে?';
+
+  @override
+  String get aiThanks => 'মতামতের জন্য ধন্যবাদ!';
+
+  @override
+  String get aiNewQuestion => 'নতুন সমস্যা';
+
+  @override
+  String aiRemaining(String n) {
+    return 'আজ আরও $nটি প্রশ্ন করতে পারবেন।';
+  }
+
+  @override
+  String get aiPhotoOnlyQuestion => '(ছবি দেখুন)';
+
+  @override
+  String get aiLoginNeeded =>
+      'AI ডাক্তার ব্যবহার করতে বিনামূল্যে লগইন করুন – এক মিনিট লাগে।';
+
+  @override
   String get privacyPolicy => 'গোপনীয়তা নীতি';
 
   @override

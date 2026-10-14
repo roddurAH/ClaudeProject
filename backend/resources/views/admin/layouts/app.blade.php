@@ -42,6 +42,7 @@
                 @can('answer-questions')
                     <li class="nav-section">Farmers</li>
                     <li><a class="nav-link @if(request()->routeIs('admin.questions.*')) active @endif" href="{{ route('admin.questions.index') }}"><i class="bi bi-chat-dots me-2"></i>Questions</a></li>
+                    <li><a class="nav-link @if(request()->routeIs('admin.ai.*')) active @endif" href="{{ route('admin.ai.index') }}"><i class="bi bi-robot me-2"></i>AI doctor</a></li>
                 @endcan
 
                 @can('manage-content')

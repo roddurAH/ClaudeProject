@@ -32,6 +32,16 @@ class KnowledgeBase {
     return null;
   }
 
+  /// A problem and its crop, e.g. to open the guide the AI doctor matched.
+  (Problem, Crop)? problemById(int? id) {
+    for (final c in crops) {
+      for (final p in c.problems) {
+        if (p.id == id) return (p, c);
+      }
+    }
+    return null;
+  }
+
   Fertilizer? fertilizerById(int id) {
     for (final f in fertilizers) {
       if (f.id == id) return f;

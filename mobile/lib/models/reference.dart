@@ -23,17 +23,21 @@ class District {
 
 /// Server-side settings from GET /meta.
 class AppMeta {
-  AppMeta({required this.helpline, required this.contentVersion, required this.minAppVersion, required this.bighaDecimal});
+  AppMeta({required this.helpline, required this.contentVersion, required this.minAppVersion, required this.bighaDecimal, this.aiEnabled = true});
 
   final String helpline;
   final String contentVersion;
   final String minAppVersion;
   final double bighaDecimal;
 
+  /// The server's AI doctor is switched on (and has an API key).
+  final bool aiEnabled;
+
   factory AppMeta.fromJson(Map<String, dynamic> j) => AppMeta(
         helpline: j['helpline_number']?.toString() ?? '16123',
         contentVersion: j['content_version']?.toString() ?? '',
         minAppVersion: j['min_app_version']?.toString() ?? '1.0.0',
         bighaDecimal: toDoubleOrNull((j['units'] as Map?)?['decimal_per_bigha']) ?? 33,
+        aiEnabled: (j['ai'] as Map?)?['enabled'] != false,
       );
 }

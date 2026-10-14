@@ -10,6 +10,10 @@
 	<string>Krishi Sathi</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Take a photo of your crop problem to send to an agriculture expert.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Speak your question to the AI crop doctor instead of typing.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Turns your spoken question into text for the AI crop doctor.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Choose a photo of your crop problem to send to an agriculture expert.</string>
 	<key>LSApplicationQueriesSchemes</key>

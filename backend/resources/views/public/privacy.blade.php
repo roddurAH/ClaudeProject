@@ -32,11 +32,13 @@
     <p>আপনি যে প্রশ্ন, ফসলের নাম ও ছবি পাঠান, তা সার্ভারে রাখা হয়। ছবি ছোট করা হয় এবং ছবির ভেতরের লুকানো তথ্য (যেমন কোথায় তোলা হয়েছে) মুছে ফেলা হয়। ক্যামেরা বা গ্যালারি শুধু তখনই খোলে যখন আপনি নিজে “ছবি যোগ করুন” চাপেন।</p>
     <p>উত্তর দেওয়ার জন্য আমাদের কৃষি বিশেষজ্ঞ ও অ্যাডমিনরা আপনার নাম, মোবাইল নম্বর ও জেলা দেখতে পারেন (দরকার হলে ফোন করে বিস্তারিত জানতে)। কোনো প্রশ্ন-উত্তর সবার কাজে লাগলে বিশেষজ্ঞ সেটি “কমিউনিটি”-তে প্রকাশ করতে পারেন – সেখানে প্রশ্ন, ছবি, উত্তর ও শুধু জেলার নাম দেখা যায়; <strong>আপনার নাম বা নম্বর কখনো দেখানো হয় না</strong>।</p>
 
+    <p><strong>AI ডাক্তার:</strong> AI ডাক্তার ব্যবহার করলে আপনার ছবি ও প্রশ্ন (নাম বা মোবাইল নম্বর নয়) উত্তর তৈরির জন্য Anthropic-এর কাছে পাঠানো হয় – তারা Claude নামের AI তৈরি করে এবং আমাদের পক্ষ থেকে কাজটি করে। তাদের বাণিজ্যিক শর্ত অনুযায়ী এই তথ্য দিয়ে তারা নিজেদের AI প্রশিক্ষণ দেয় না, আর নিরাপত্তা যাচাইয়ের জন্য অল্প সময় রাখে। কথোপকথনটি আমরা রাখি, যাতে আপনি পরে দেখতে পারেন এবং আমাদের বিশেষজ্ঞরা উত্তরের মান যাচাই করতে পারেন। কথা বলে প্রশ্ন করলে ফোনের নিজস্ব ভয়েস সেবা (যেমন Google) কথাকে লেখায় রূপান্তর করে; আমরা শুধু লেখাটি পাই, কোনো অডিও নয়।</p>
+
     <h2>৪. শুধু আপনার ফোনে থাকে</h2>
     <p>“আমার ফসল” (ফসল, তারিখ, জমির পরিমাণ), সেটিংস, সংরক্ষিত তথ্য এবং ইন্টারনেট না থাকায় এখনো না-পাঠানো প্রশ্ন শুধু আপনার ফোনেই থাকে। অ্যাপ মুছে ফেললে এগুলোও মুছে যায়। লেখা পড়ে শোনানো হয় ফোনের নিজস্ব ভয়েস ইঞ্জিন দিয়ে।</p>
 
     <h2>৫. অন্য কারো সাথে শেয়ার</h2>
-    <p>আমরা আপনার ব্যক্তিগত তথ্য কাউকে বিক্রি বা শেয়ার করি না। আবহাওয়ার পূর্বাভাস আমাদের সার্ভার জেলার অবস্থান দিয়ে Open-Meteo থেকে আনে – তাতে আপনার কোনো ব্যক্তিগত তথ্য যায় না। আইন অনুযায়ী বাধ্য হলে শুধু তখনই কর্তৃপক্ষকে তথ্য দেওয়া হতে পারে।</p>
+    <p>আমরা আপনার ব্যক্তিগত তথ্য কাউকে বিক্রি বা শেয়ার করি না (উপরের AI ডাক্তার সেবা ছাড়া, যা শুধু আমাদের হয়ে কাজ করে)। আবহাওয়ার পূর্বাভাস আমাদের সার্ভার জেলার অবস্থান দিয়ে Open-Meteo থেকে আনে – তাতে আপনার কোনো ব্যক্তিগত তথ্য যায় না। আইন অনুযায়ী বাধ্য হলে শুধু তখনই কর্তৃপক্ষকে তথ্য দেওয়া হতে পারে।</p>
 
     <h2>৬. নিরাপত্তা</h2>
     <p>অ্যাপ ও সার্ভারের মধ্যে সব তথ্য এনক্রিপ্টেড (HTTPS) সংযোগে যায়। ভুল পিন বারবার দিলে অ্যাকাউন্ট কিছুক্ষণের জন্য বন্ধ থাকে। সাইন-ইন মেয়াদ {{ \App\Support\BanglaText::toBanglaDigits((string) config('krishi.token_ttl_days')) }} দিন পর শেষ হয়।</p>
@@ -74,11 +76,13 @@
     <p>The questions, crop and photos you send are stored on our server. Photos are resized and their hidden metadata (such as where they were taken) is removed. The camera or gallery opens only when you tap “Add photo”.</p>
     <p>To answer you, our agriculture experts and administrators can see your name, mobile number and district (to call you if more detail is needed). If a question and answer would help others, an expert may publish it in the community section, showing the question, photo, answer and only your district – <strong>never your name or number</strong>.</p>
 
+    <p><strong>AI doctor:</strong> when you use the AI doctor, your photo and question (not your name or phone number) are sent to Anthropic, the company that makes the Claude AI, which produces the answer on our behalf. Under its commercial terms Anthropic does not use this data to train its AI and keeps it only for a limited time for safety checks. We keep the conversation so you can see it again and so our experts can check the quality of the answers. If you ask by voice, your phone's own speech service (e.g. Google) turns speech into text; we receive only the text, never audio.</p>
+
     <h2>4. Kept only on your phone</h2>
     <p>“My crops” (crop, dates, land size), settings, saved content and questions not yet sent because you were offline stay on your phone only, and are removed when you uninstall the app. Read-aloud uses your phone’s own text-to-speech engine.</p>
 
     <h2>5. Sharing</h2>
-    <p>We do not sell or share your personal data. Our server fetches weather forecasts from Open-Meteo using the district’s location only – no personal data is sent. We disclose data to authorities only when the law requires it.</p>
+    <p>We do not sell or share your personal data (apart from the AI doctor service above, which works only on our behalf). Our server fetches weather forecasts from Open-Meteo using the district’s location only – no personal data is sent. We disclose data to authorities only when the law requires it.</p>
 
     <h2>6. Security</h2>
     <p>All data between the app and the server travels over an encrypted (HTTPS) connection. Repeated wrong PINs lock the account for a while. Sign-ins expire after {{ config('krishi.token_ttl_days') }} days.</p>

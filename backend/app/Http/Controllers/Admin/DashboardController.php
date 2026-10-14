@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\QuestionStatus;
 use App\Enums\Role;
 use App\Http\Controllers\Controller;
+use App\Models\AiMessage;
 use App\Models\Alert;
 use App\Models\Crop;
 use App\Models\MarketPrice;
@@ -28,6 +29,8 @@ class DashboardController extends Controller
             'prices_today' => MarketPrice::whereDate('price_date', today())->count(),
             'last_price_date' => MarketPrice::max('price_date'),
             'active_alerts' => Alert::active()->count(),
+            'ai_today' => AiMessage::where('role', 'assistant')->where('created_at', '>=', today())->count(),
+            'ai_cost_today' => AiMessage::costSince(today()),
         ];
 
         $oldestPending = Question::with(['user', 'crop', 'district'])

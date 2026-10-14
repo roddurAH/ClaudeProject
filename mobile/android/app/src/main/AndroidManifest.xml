@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Needed in release builds to reach the API. -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- AI doctor: speak your question (the phone's speech recogniser turns it into text). -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
     <!-- Plain http is off in release builds (see usesCleartextTraffic in
          app/build.gradle.kts); test APKs built with KRISHI_ALLOW_HTTP=true
@@ -48,6 +50,10 @@
         <intent>
             <action android:name="android.intent.action.DIAL" />
             <data android:scheme="tel" />
+        </intent>
+        <!-- Speech-to-text for asking the AI doctor by voice. -->
+        <intent>
+            <action android:name="android.speech.RecognitionService" />
         </intent>
         <!-- Open the privacy policy in the browser. -->
         <intent>

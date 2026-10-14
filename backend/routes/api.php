@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\AiController;
 use App\Http\Controllers\Api\V1\AlertController;
 use App\Http\Controllers\Api\V1\ArticleController;
 use App\Http\Controllers\Api\V1\AuthController;
@@ -65,5 +66,12 @@ Route::prefix('v1')->middleware('throttle:api')->group(function () {
         Route::get('questions', [QuestionController::class, 'index']);
         Route::post('questions', [QuestionController::class, 'store'])->middleware('throttle:questions');
         Route::get('questions/{question}', [QuestionController::class, 'show']);
+
+        // AI crop doctor (photo + question → instant advice)
+        Route::post('ai/ask', [AiController::class, 'ask'])->middleware('throttle:ai');
+        Route::get('ai/conversations', [AiController::class, 'index']);
+        Route::get('ai/conversations/{conversation}', [AiController::class, 'show']);
+        Route::post('ai/conversations/{conversation}/rate', [AiController::class, 'rate']);
+        Route::post('ai/conversations/{conversation}/escalate', [AiController::class, 'escalate'])->middleware('throttle:questions');
     });
 });

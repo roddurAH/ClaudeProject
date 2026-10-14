@@ -1,6 +1,8 @@
 import 'core/network/api_client.dart';
 import 'core/services/tts_service.dart';
+import 'core/services/voice_input_service.dart';
 import 'core/storage/local_store.dart';
+import 'data/ai_repository.dart';
 import 'data/auth_repository.dart';
 import 'data/content_repository.dart';
 import 'data/my_crops_repository.dart';
@@ -29,6 +31,8 @@ class AppServices {
     required this.weather,
     required this.questions,
     required this.tts,
+    required this.ai,
+    required this.voice,
   });
 
   final LocalStore store;
@@ -42,8 +46,10 @@ class AppServices {
   final WeatherRepository weather;
   final QuestionRepository questions;
   final TtsService tts;
+  final AiRepository ai;
+  final VoiceInput voice;
 
-  factory AppServices.create(LocalStore store, {ApiClient? api}) {
+  factory AppServices.create(LocalStore store, {ApiClient? api, VoiceInput? voice}) {
     final settings = SettingsController(store);
     late final AuthRepository authRepo;
     final client = api ??
@@ -68,6 +74,8 @@ class AppServices {
       weather: WeatherRepository(client, store),
       questions: QuestionRepository(client, store),
       tts: TtsService(),
+      ai: AiRepository(client),
+      voice: voice ?? SpeechVoiceInput(),
     );
   }
 

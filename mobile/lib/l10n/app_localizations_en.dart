@@ -855,6 +855,126 @@ class AppLocalizationsEn extends AppLocalizations {
   String get account => 'Account';
 
   @override
+  String get aiDoctorTitle => 'AI crop doctor';
+
+  @override
+  String get aiDoctorHomeDesc =>
+      'Photo or voice – instant advice for sick plants';
+
+  @override
+  String get aiShowPhoto => 'Show the AI a photo';
+
+  @override
+  String get aiIntroTitle => 'Show me the problem';
+
+  @override
+  String get aiIntroText =>
+      'Take a photo of the sick plant or choose one from the gallery. You can also say what is wrong – type it, or tap 🎤 and speak.';
+
+  @override
+  String get aiDisclaimer =>
+      'AI can make mistakes. For serious problems ask an expert or call 16123 (free).';
+
+  @override
+  String get aiCropOptional => 'Crop (optional)';
+
+  @override
+  String get aiInputHint => 'What is the problem? Type, or tap 🎤';
+
+  @override
+  String get aiFollowUpHint => 'Answer, or add a new photo';
+
+  @override
+  String get aiSpeak => 'Speak';
+
+  @override
+  String get aiStopListening => 'Stop';
+
+  @override
+  String get aiListening => 'Listening… speak now';
+
+  @override
+  String get aiVoiceUnavailable =>
+      'Voice input is not available on this phone. Please type.';
+
+  @override
+  String get aiPhotoAdded => 'Photo added';
+
+  @override
+  String get aiThinking => 'Looking at your plant…';
+
+  @override
+  String get aiThinkingHint => 'This usually takes 10–30 seconds.';
+
+  @override
+  String get aiOffline =>
+      'The AI doctor needs internet. You can save the question for an expert – it is sent automatically when you are online.';
+
+  @override
+  String get aiSaveForExpert => 'Save for an expert';
+
+  @override
+  String get aiDeclined =>
+      'The AI could not answer this. Please send it to an expert.';
+
+  @override
+  String get aiAnswerTitle => 'AI doctor\'s advice';
+
+  @override
+  String get aiConfHigh => 'Very likely';
+
+  @override
+  String get aiConfMedium => 'Possible';
+
+  @override
+  String get aiConfLow => 'Not sure';
+
+  @override
+  String get aiAlsoPossible => 'Could also be';
+
+  @override
+  String get aiWhatToDo => 'What to do now';
+
+  @override
+  String aiFullGuide(String name) {
+    return 'Full guide: $name';
+  }
+
+  @override
+  String get aiNeedsExpert => 'Better let an expert check this.';
+
+  @override
+  String get aiSendToExpert => 'Send to an expert';
+
+  @override
+  String get aiSentToExpert =>
+      'Sent to the experts. You will find the answer in \'Ask an expert\'.';
+
+  @override
+  String get aiSentToExpertShort => '✓ Sent to an expert';
+
+  @override
+  String get aiWasHelpful => 'Was this helpful?';
+
+  @override
+  String get aiThanks => 'Thank you for the feedback!';
+
+  @override
+  String get aiNewQuestion => 'New problem';
+
+  @override
+  String aiRemaining(String n) {
+    return 'You can ask $n more today.';
+  }
+
+  @override
+  String get aiPhotoOnlyQuestion => '(Please see the photo)';
+
+  @override
+  String get aiLoginNeeded =>
+      'Log in (free) to use the AI doctor – it takes a minute.';
+
+  @override
   String get privacyPolicy => 'Privacy policy';
 
   @override

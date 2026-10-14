@@ -12,6 +12,7 @@ import '../../l10n/app_localizations.dart';
 import '../../models/content.dart';
 import '../../state/content_controller.dart';
 import '../../state/settings_controller.dart';
+import '../ai_doctor/ai_doctor_screen.dart';
 import '../calculator/fertilizer_calculator_screen.dart';
 import '../my_crops/add_my_crop_screen.dart';
 import 'crop_labels.dart';
@@ -79,6 +80,12 @@ class _ProblemsTabState extends State<_ProblemsTab> {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
+        FilledButton.icon(
+          onPressed: () => push(context, AiDoctorScreen(cropId: widget.crop.id)),
+          icon: const Icon(Icons.photo_camera),
+          label: Text(l10n.aiShowPhoto),
+        ),
+        const SizedBox(height: 16),
         Text(l10n.whereIsProblem, style: Theme.of(context).textTheme.titleMedium),
         const SizedBox(height: 10),
         Wrap(

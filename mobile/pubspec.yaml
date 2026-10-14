@@ -43,6 +43,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   cupertino_icons: ^2.0.0
+  speech_to_text: ^7.5.0
 
 dev_dependencies:
   flutter_test:

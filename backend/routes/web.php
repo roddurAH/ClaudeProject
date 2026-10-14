@@ -52,6 +52,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('questions/{question}', [Admin\QuestionController::class, 'show'])->name('questions.show');
             Route::post('questions/{question}/answers', [Admin\QuestionController::class, 'answer'])->name('questions.answer');
             Route::patch('questions/{question}', [Admin\QuestionController::class, 'update'])->name('questions.update');
+            Route::get('ai-conversations', [Admin\AiConversationController::class, 'index'])->name('ai.index');
+            Route::get('ai-conversations/{conversation}', [Admin\AiConversationController::class, 'show'])->name('ai.show');
         });
 
         Route::middleware('can:manage-prices')->group(function () {

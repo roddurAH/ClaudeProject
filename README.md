@@ -10,6 +10,7 @@
 | 🔌 **API reference** | [`docs/API.md`](docs/API.md) |
 | 🧑‍🌾 **Admin guide** | [`docs/ADMIN_GUIDE.md`](docs/ADMIN_GUIDE.md) |
 | 📲 **Test APK for your phone** | GitHub → Releases → *android-test* ([how](docs/ANDROID_RELEASE.md#test-apk-for-your-own-phone-no-play-store)) |
+| 🤖 **AI crop doctor (photo + voice)** | [`docs/AI_DOCTOR.md`](docs/AI_DOCTOR.md) |
 | 🚀 **Publish on Google Play** | [`docs/ANDROID_RELEASE.md`](docs/ANDROID_RELEASE.md) |
 
 <p>
@@ -54,12 +55,13 @@ See [PROJECT_PLAN.md §11](PROJECT_PLAN.md#11-local-installation-and-configurati
 * 64 districts, 10 markets, 18 commodities, government fertilizer prices, 8 practical articles.
 * Works **offline from the first launch**; a knowledge-base refresh costs about 37 KB (0 KB if unchanged).
 * Read-aloud in Bangla, large-text mode, data saver, Bangla digits and the Bengali calendar date.
+* **AI crop doctor:** photograph a sick plant and ask by voice in Bangla. Claude answers in seconds, grounded in the knowledge base, reads the answer aloud and hands the case to a human expert with one tap ([docs/AI_DOCTOR.md](docs/AI_DOCTOR.md)).
 
 ## Tests
 
 ```bash
-cd backend && php artisan test   # 70 tests (SQLite by default; MySQL also supported)
-cd mobile  && flutter test       # 25 tests (unit, repository, widget journeys)
+cd backend && php artisan test   # 83 tests (SQLite by default; MySQL also supported)
+cd mobile  && flutter test       # 31 tests (unit, repository, widget journeys)
 ```
 
 A real-browser end-to-end walkthrough is in [`tools/e2e/`](tools/e2e/).

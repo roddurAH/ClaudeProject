@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Services\AiDoctorService;
 use App\Services\ContentVersion;
 use Illuminate\Http\JsonResponse;
 
@@ -12,7 +13,7 @@ use Illuminate\Http\JsonResponse;
  */
 class MetaController extends Controller
 {
-    public function __invoke(ContentVersion $version): JsonResponse
+    public function __invoke(ContentVersion $version, AiDoctorService $ai): JsonResponse
     {
         return response()->json([
             'app_name' => config('app.name'),
@@ -20,6 +21,7 @@ class MetaController extends Controller
             'min_app_version' => config('krishi.min_app_version'),
             'content_version' => $version->current(),
             'units' => config('krishi.units'),
+            'ai' => ['enabled' => $ai->isAvailable(), 'daily_limit' => (int) config('krishi.ai.daily_limit')],
             'server_time' => now()->toIso8601String(),
         ]);
     }

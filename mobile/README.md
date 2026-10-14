@@ -55,5 +55,5 @@ test/          unit, repository (offline/ETag/outbox) and widget tests
 
 ```bash
 flutter analyze
-flutter test        # 25 tests
+flutter test        # 31 tests
 ```

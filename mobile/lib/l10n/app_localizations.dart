@@ -1640,6 +1640,222 @@ abstract class AppLocalizations {
   /// **'Account'**
   String get account;
 
+  /// No description provided for @aiDoctorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'AI crop doctor'**
+  String get aiDoctorTitle;
+
+  /// No description provided for @aiDoctorHomeDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo or voice – instant advice for sick plants'**
+  String get aiDoctorHomeDesc;
+
+  /// No description provided for @aiShowPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Show the AI a photo'**
+  String get aiShowPhoto;
+
+  /// No description provided for @aiIntroTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Show me the problem'**
+  String get aiIntroTitle;
+
+  /// No description provided for @aiIntroText.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a photo of the sick plant or choose one from the gallery. You can also say what is wrong – type it, or tap 🎤 and speak.'**
+  String get aiIntroText;
+
+  /// No description provided for @aiDisclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'AI can make mistakes. For serious problems ask an expert or call 16123 (free).'**
+  String get aiDisclaimer;
+
+  /// No description provided for @aiCropOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Crop (optional)'**
+  String get aiCropOptional;
+
+  /// No description provided for @aiInputHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What is the problem? Type, or tap 🎤'**
+  String get aiInputHint;
+
+  /// No description provided for @aiFollowUpHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Answer, or add a new photo'**
+  String get aiFollowUpHint;
+
+  /// No description provided for @aiSpeak.
+  ///
+  /// In en, this message translates to:
+  /// **'Speak'**
+  String get aiSpeak;
+
+  /// No description provided for @aiStopListening.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get aiStopListening;
+
+  /// No description provided for @aiListening.
+  ///
+  /// In en, this message translates to:
+  /// **'Listening… speak now'**
+  String get aiListening;
+
+  /// No description provided for @aiVoiceUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Voice input is not available on this phone. Please type.'**
+  String get aiVoiceUnavailable;
+
+  /// No description provided for @aiPhotoAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo added'**
+  String get aiPhotoAdded;
+
+  /// No description provided for @aiThinking.
+  ///
+  /// In en, this message translates to:
+  /// **'Looking at your plant…'**
+  String get aiThinking;
+
+  /// No description provided for @aiThinkingHint.
+  ///
+  /// In en, this message translates to:
+  /// **'This usually takes 10–30 seconds.'**
+  String get aiThinkingHint;
+
+  /// No description provided for @aiOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'The AI doctor needs internet. You can save the question for an expert – it is sent automatically when you are online.'**
+  String get aiOffline;
+
+  /// No description provided for @aiSaveForExpert.
+  ///
+  /// In en, this message translates to:
+  /// **'Save for an expert'**
+  String get aiSaveForExpert;
+
+  /// No description provided for @aiDeclined.
+  ///
+  /// In en, this message translates to:
+  /// **'The AI could not answer this. Please send it to an expert.'**
+  String get aiDeclined;
+
+  /// No description provided for @aiAnswerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'AI doctor\'s advice'**
+  String get aiAnswerTitle;
+
+  /// No description provided for @aiConfHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'Very likely'**
+  String get aiConfHigh;
+
+  /// No description provided for @aiConfMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Possible'**
+  String get aiConfMedium;
+
+  /// No description provided for @aiConfLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Not sure'**
+  String get aiConfLow;
+
+  /// No description provided for @aiAlsoPossible.
+  ///
+  /// In en, this message translates to:
+  /// **'Could also be'**
+  String get aiAlsoPossible;
+
+  /// No description provided for @aiWhatToDo.
+  ///
+  /// In en, this message translates to:
+  /// **'What to do now'**
+  String get aiWhatToDo;
+
+  /// No description provided for @aiFullGuide.
+  ///
+  /// In en, this message translates to:
+  /// **'Full guide: {name}'**
+  String aiFullGuide(String name);
+
+  /// No description provided for @aiNeedsExpert.
+  ///
+  /// In en, this message translates to:
+  /// **'Better let an expert check this.'**
+  String get aiNeedsExpert;
+
+  /// No description provided for @aiSendToExpert.
+  ///
+  /// In en, this message translates to:
+  /// **'Send to an expert'**
+  String get aiSendToExpert;
+
+  /// No description provided for @aiSentToExpert.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent to the experts. You will find the answer in \'Ask an expert\'.'**
+  String get aiSentToExpert;
+
+  /// No description provided for @aiSentToExpertShort.
+  ///
+  /// In en, this message translates to:
+  /// **'✓ Sent to an expert'**
+  String get aiSentToExpertShort;
+
+  /// No description provided for @aiWasHelpful.
+  ///
+  /// In en, this message translates to:
+  /// **'Was this helpful?'**
+  String get aiWasHelpful;
+
+  /// No description provided for @aiThanks.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you for the feedback!'**
+  String get aiThanks;
+
+  /// No description provided for @aiNewQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'New problem'**
+  String get aiNewQuestion;
+
+  /// No description provided for @aiRemaining.
+  ///
+  /// In en, this message translates to:
+  /// **'You can ask {n} more today.'**
+  String aiRemaining(String n);
+
+  /// No description provided for @aiPhotoOnlyQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'(Please see the photo)'**
+  String get aiPhotoOnlyQuestion;
+
+  /// No description provided for @aiLoginNeeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Log in (free) to use the AI doctor – it takes a minute.'**
+  String get aiLoginNeeded;
+
   /// No description provided for @privacyPolicy.
   ///
   /// In en, this message translates to:

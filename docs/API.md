@@ -230,6 +230,43 @@ Answered questions that an expert published. **Who asked is never included**, on
 
 ---
 
+## AI crop doctor
+
+Signed in only. 10 questions per user per day (`KRISHI_AI_DAILY_LIMIT`) and 5 per minute. See [AI_DOCTOR.md](AI_DOCTOR.md).
+
+### `POST /ai/ask` 🔒 (multipart/form-data)
+| Field | Rules |
+|---|---|
+| `image` | photo (jpg, png, webp, ≤ 5 MB); required when there is no `text` |
+| `text` | question, ≤ 1000 chars (typed or from voice); required when there is no `image` |
+| `crop_id` | optional |
+| `conversation_id` | to continue (follow-up answer or new photo) |
+
+The answer takes 10–30 s. `200`:
+```json
+{ "conversation_id": 7, "remaining_today": 9,
+  "message": { "id": 42, "role": "assistant", "text": "এটি সম্ভবত পাতা কোঁকড়ানো ভাইরাস।", "image_url": null,
+    "result": { "is_plant_photo": true, "answer": "এটি সম্ভবত পাতা কোঁকড়ানো ভাইরাস। …",
+      "likely_problems": [ { "problem_id": 12, "name": "পাতা কোঁকড়ানো ভাইরাস", "confidence": "high" } ],
+      "steps": ["আক্রান্ত গাছ তুলে ফেলুন।", "হলুদ আঠালো ফাঁদ দিন।"],
+      "safety_note": null, "needs_expert": false, "follow_up_question": "পাতার নিচে সাদা মাছি আছে?" } } }
+```
+`problem_id` is a knowledge-base problem (open its guide) or `null`. `result` is `null` when the AI declined to answer (offer the expert).
+Errors: `429` daily limit (message says so), `503` busy or AI switched off (Bangla/English `message`), `422` validation.
+
+### `GET /ai/conversations` 🔒 · `GET /ai/conversations/{id}` 🔒
+History with messages (own conversations only).
+
+### `POST /ai/conversations/{id}/rate` 🔒
+`{ "rating": "up" | "down", "feedback": "…" }`
+
+### `POST /ai/conversations/{id}/escalate` 🔒
+Sends the case to the human experts: creates a normal question (with a copy of the photo and the AI's answer) and returns it like `POST /questions` (`201`). Calling it again returns the same question.
+
+`GET /meta` includes `"ai": { "enabled": true, "daily_limit": 10 }`; the app hides the AI card when it is `false`.
+
+---
+
 ## Media
 
 `GET /media/{path}` serves uploaded photos with a 30-day cache header. Paths containing `..` are rejected.

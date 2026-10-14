@@ -159,11 +159,11 @@ Scores are 1–5. Priority = Impact × Feasibility, adjusted for accessibility.
 | Push notifications (alerts, answers, task reminders) | P2, P4 | 4 | 3 | Could | Phase 2 |
 | SMS OTP login / PIN reset | security | 3 | 3 | Could | Phase 2 |
 | Automated DAM price import / BAMIS advisories | P3, P4 | 4 | 2 | Could | Phase 2 |
-| AI photo diagnosis | P1 | 4 | 2 | Could | Phase 3 |
-| Voice questions / IVR for feature phones | P7 | 4 | 2 | Could | Phase 3 |
+| AI photo diagnosis + voice questions (AI crop doctor, Claude, guarded, grounded in the knowledge base) | P1, P7 | 5 | 3 | **Should** | ✅ |
+| IVR / SMS for feature phones | P7 | 4 | 2 | Could | Phase 3 |
 | Marketplace / buyer linkage | P3 | 3 | 2 | Won't (now) | Phase 3 |
 
-Features deliberately **left out** of the MVP: a marketplace (it needs logistics and trust systems; Sadai shows the difficulty), finance (iFarmer and WeGro cover it), social feeds (moderation cost), and AI chat without guardrails (pesticide-advice risk).
+Features deliberately **left out** of the MVP: a marketplace (it needs logistics and trust systems; Sadai shows the difficulty), finance (iFarmer and WeGro cover it), social feeds (moderation cost), and AI chat without guardrails (pesticide-advice risk). The AI crop doctor that *was* added is guard-railed: server-side, grounded in the knowledge base, IPM-first, with a daily limit and a one-tap human-expert hand-over.
 
 ---
 
@@ -193,6 +193,7 @@ Features deliberately **left out** of the MVP: a marketplace (it needs logistics
 | FR-16 | Settings: language, district, user type, text size, data saver, bigha size, sync now, account, server address, privacy policy | ✅ |
 | FR-17 | Delete my account in the app (PIN confirmation); removes profile, questions, photos and answers on the server and the user's questions on the phone | ✅ |
 | FR-18 | "Please update the app" banner with a Play Store link when the server's minimum app version is higher | ✅ |
+| FR-19 | **AI crop doctor:** photo (camera/gallery) and/or question typed or spoken in Bangla → structured answer (likely problem + confidence, steps, safety note, follow-up question) in seconds; auto read-aloud for voice questions; link to the matching knowledge-base guide; 👍/👎; one-tap hand-over to a human expert; offline → keep for an expert | ✅ |
 
 **API and admin panel**
 
@@ -209,6 +210,7 @@ Features deliberately **left out** of the MVP: a marketplace (it needs logistics
 | FR-28 | Alerts: severity, bilingual text, national or selected districts (division shortcut), start/end time | ✅ |
 | FR-29 | User and staff management with role rules (no self-demotion; only super admin manages admins); disabling revokes app tokens | ✅ |
 | FR-30 | `php artisan krishi:export-content` bundles the knowledge base and districts into the app | ✅ |
+| FR-32 | AI doctor backend: Claude Opus 5.5 with cached guard-railed system prompt + knowledge-base catalogue, structured output, per-user daily limit, usage/cost logging, admin review page (👎 / unsure / escalated), demo driver, `krishi:ai-check` | ✅ |
 | FR-31 | Public bilingual pages for app stores: privacy policy (`/privacy`) and account deletion without the app (`/account/delete`); admins can delete an app user's account on request | ✅ |
 
 ### 5.2 Non-functional requirements
@@ -261,13 +263,14 @@ flowchart LR
 | State management | `provider` + `ChangeNotifier` | Small, stable and easy to learn; enough for this app |
 | HTTP | `dio` | Interceptable, timeouts, multipart uploads on web and mobile |
 | Local storage | `hive_ce` (community-maintained Hive) | Works on all platforms including web (IndexedDB); no code generation |
-| Other packages | `flutter_tts`, `image_picker`, `cached_network_image`, `url_launcher`, `intl`, gen-l10n | Read-aloud, photos, image caching, dialler, localisation |
+| Other packages | `flutter_tts`, `speech_to_text`, `image_picker`, `cached_network_image`, `url_launcher`, `intl`, gen-l10n | Read-aloud, Bangla voice input, photos, image caching, dialler, localisation |
 | Font | Hind Siliguri (OFL), bundled | Consistent, clear Bangla on every device, including web |
 | Backend | **Laravel 12** on **PHP 8.2+** | Matches XAMPP's PHP; security support to early 2027, with a documented upgrade path to Laravel 13 |
 | API auth | Laravel **Sanctum** personal access tokens | Simple bearer tokens for mobile; expiry set |
 | Admin UI | Blade + Bootstrap 5.3 + Bootstrap Icons, **served locally** | No Node or Vite build step; works offline or on an intranet |
 | Database | **MySQL / MariaDB** (XAMPP); SQLite for the test suite | As requested; tests run on both |
 | Weather | **Open-Meteo** forecast API via a server-side proxy | Free, no key; the server caches and can swap providers (BMD/BAMIS) without an app update |
+| AI crop doctor | **Claude Opus 5.5** via the official Anthropic PHP SDK, server-side only | Strong photo understanding and natural Bangla; follows safety rules; key stays on the server; model switchable in `.env` (see `docs/AI_DOCTOR.md`) |
 | Testing | PHPUnit, flutter_test, Playwright walkthrough | Unit, feature, widget and end-to-end coverage |
 
 ---
@@ -363,6 +366,9 @@ Base URL: `/api/v1`. Full request and response examples are in **[docs/API.md](d
 | POST | `/auth/logout` | ✓ | Revoke current token |
 | GET / PATCH | `/me` | ✓ | Profile; change PIN needs the current PIN |
 | DELETE | `/me` | ✓ | Delete account and all data (PIN required) |
+| POST | `/ai/ask` | ✓ | AI crop doctor: `image` and/or `text`, `crop_id`, `conversation_id` → structured answer (daily limit) |
+| GET | `/ai/conversations`, `/ai/conversations/{id}` | ✓ | AI doctor history |
+| POST | `/ai/conversations/{id}/rate`, `/ai/conversations/{id}/escalate` | ✓ | 👍/👎; hand over to a human expert (creates a question) |
 | GET / POST | `/questions` | ✓ | My questions; ask (multipart: `body`, `crop_id`, `image`) |
 | GET | `/questions/{id}` | ✓ | Own question, or a public answered one |
 
@@ -479,7 +485,7 @@ tests/Unit, tests/Feature
 | **1. MVP build** | 3–4 weeks | Everything in §5.1 marked ✅; seed content; tests; docs | ✅ Done |
 | **2. Content and pilot** | 6–8 weeks | Agronomist review of all content; problem photos; real price entry for 3–5 markets; Android internal testing; field test with 30–50 users in 2 upazilas (one farming, one peri-urban gardening) | Next |
 | **3. Hardening and launch** | 4–6 weeks | Production hosting, HTTPS, Play Store release, push notifications, OTP, admin panel in Bangla, analytics | Planned |
-| **4. Scale** | ongoing | AI diagnosis, voice, DAM/BAMIS integration, more crops, livestock and fisheries | Roadmap |
+| **4. Scale** | ongoing | Offline AI, DAM/BAMIS integration, more crops, livestock and fisheries (online AI doctor with voice ✅ done) | Roadmap |
 
 ### 10.2 Milestones and acceptance criteria
 
@@ -573,6 +579,9 @@ flutter run -d emulator-5554       # Android emulator: uses http://10.0.2.2:8000
 | `KRISHI_HELPLINE` | `16123` | Call-centre number shown in the app |
 | `KRISHI_OPERATOR_NAME` | `Krishi Sathi` | Organisation named in the privacy policy |
 | `KRISHI_SUPPORT_EMAIL` | – | Contact shown on `/privacy` and `/account/delete` (**set before publishing**) |
+| `ANTHROPIC_API_KEY` | – | Key for the AI crop doctor (server only) |
+| `KRISHI_AI_DRIVER` / `KRISHI_AI_MODEL` / `KRISHI_AI_EFFORT` | `anthropic` / `claude-opus-5-5` / `medium` | `demo` gives canned answers without a key |
+| `KRISHI_AI_DAILY_LIMIT` | `10` | AI questions per user per day |
 | `KRISHI_BIGHA_DECIMAL` | `33` | Default bigha size in decimals (users can override) |
 | `KRISHI_MIN_APP_VERSION` | `1.0.0` | Lowest supported app version |
 | `KRISHI_TOKEN_TTL_DAYS` | `180` | App login lifetime |
@@ -612,9 +621,9 @@ flutter run -d emulator-5554       # Android emulator: uses http://10.0.2.2:8000
 | Suite | Count | Covers | Run |
 |---|---|---|---|
 | Laravel unit | 2 files | Bangla digit/phone normalisation; farm advisory rules (rain, storm, heat, cold, late blight, dry spell, bilingual output) | `php artisan test` |
-| Laravel feature | 8 files, **70 tests total** | Auth (Bangla digits, lockout, role escalation, disabled users), account deletion (app, web form, admin; shared PIN lockout; staff protected), privacy page, content (ETag/304, unpublished hidden, gzip, UTF-8), prices (trend, nearest market, history), questions (upload + resize, privacy, rate limit), weather (mocked provider, cache, stale fallback, 503), admin (role matrix, every page renders, user-role rules, price entry and CSV import, targeted alerts, expert answer reaching the app, path traversal) | Run on **SQLite and MariaDB** |
+| Laravel feature | 9 files, **83 tests total** | AI doctor (request sent to Claude incl. image, cache and fallback; follow-ups keep the cached prefix; daily limit; busy/declined/disabled; demo driver; escalation; admin review), auth (Bangla digits, lockout, role escalation, disabled users), account deletion (app, web form, admin; shared PIN lockout; staff protected), privacy page, content (ETag/304, unpublished hidden, gzip, UTF-8), prices (trend, nearest market, history), questions (upload + resize, privacy, rate limit), weather (mocked provider, cache, stale fallback, 503), admin (role matrix, every page renders, user-role rules, price entry and CSV import, targeted alerts, expert answer reaching the app, path traversal) | Run on **SQLite and MariaDB** |
 | Flutter unit and repository | 2 files | Bangla numbers, **Bengali calendar incl. leap years**, land units, fertilizer maths, crop schedule; offline cache fallback, validation errors, ETag/304, question outbox, account deletion, no-server mode | `flutter test` |
-| Flutter widget | 6 journeys, **25 tests total** | Onboarding, offline crop doctor, calculator, offline question queued, English UI, My crops | `flutter test` |
+| Flutter widget | 8 journeys, **31 tests total** | Onboarding, offline crop doctor, calculator, offline question queued, English UI, My crops, **AI doctor answer → full guide**, AI doctor offline → saved for expert | `flutter test` |
 | End-to-end | 1 script | Real browser: app + admin, full Q&A loop | `tools/e2e` |
 
 **Manual and field testing (pilot):**
@@ -649,6 +658,7 @@ flutter run -d emulator-5554       # Android emulator: uses http://10.0.2.2:8000
 * **Brute-force protection:** per-IP throttles plus a per-phone lockout (5 wrong PINs → 15 minutes); admin login throttled.
 * **RBAC** with Gates on every admin route group. `role` and `is_active` are not mass-assignable; registration cannot escalate a role (tested). Admins cannot touch admin accounts; nobody can demote themselves.
 * Disabled users are blocked on every request; their app tokens are revoked.
+* **AI crop doctor:** the Anthropic key lives only in the server `.env`; per-user daily limit plus per-minute throttle; the guard-railed system prompt (IPM first, no banned pesticides, label doses, "not sure" allowed) is fixed on the server; answers use a JSON schema and unknown problem ids are dropped; usage and estimated cost are logged; the name and phone number are never sent to the AI.
 * **Account deletion** (Google Play policy): in the app (PIN), on the public web page `/account/delete` or by an admin on request. Deletes the profile, tokens, questions, photos and answers; staff accounts can only be disabled. A public privacy policy is served at `/privacy`.
 * Sanctum tokens expire (180 days); logout revokes the token.
 * Validation through Form Requests everywhere; Bangla digits and phone formats normalised first.
@@ -702,8 +712,9 @@ flutter run -d emulator-5554       # Android emulator: uses http://10.0.2.2:8000
 | | DAM price PDF → CSV automation | Real prices at scale |
 | | Optional account sync for My crops | Phone changes |
 | | Usage analytics (privacy-preserving) | Product decisions |
-| **Later (Phase 4)** | **AI photo diagnosis** on-device (TFLite) with an expert fallback | Instant help, works offline |
-| | Voice questions and voice search (Bangla ASR) | Low literacy |
+| **Next** | AI doctor: collect 👎 cases and expert corrections into an eval set; tune prompt and knowledge base; consider Sonnet/Haiku for cost once quality is measured | Accuracy, cost |
+| **Later (Phase 4)** | **Offline AI photo diagnosis** on-device (TFLite) for no-network areas, with the online AI doctor as fallback | Works offline |
+| | Voice search across the app; spoken answers in regional dialects | Low literacy |
 | | IVR / SMS channel for feature phones | Reach the remaining 70%+ of rural individuals |
 | | BAMIS/BMD advisories and SRDI soil-test fertilizer integration | Authority, precision |
 | | Livestock, poultry and fisheries modules | Homestead income (62% of households keep poultry) |

@@ -41,6 +41,25 @@ return [
         'timeout_seconds' => 8,
     ],
 
+    // AI crop doctor (photo + question → instant advice). See docs/AI_DOCTOR.md.
+    'ai' => [
+        'enabled' => (bool) env('KRISHI_AI_ENABLED', true),
+        // "anthropic" = Claude; "demo" = canned answers for trying the app without an API key.
+        'driver' => env('KRISHI_AI_DRIVER', 'anthropic'),
+        'api_key' => env('ANTHROPIC_API_KEY'),
+        'model' => env('KRISHI_AI_MODEL', 'claude-opus-5-5'),
+        'effort' => env('KRISHI_AI_EFFORT', 'medium'),     // low | medium | high
+        'max_tokens' => (int) env('KRISHI_AI_MAX_TOKENS', 16000),
+        'timeout_seconds' => (int) env('KRISHI_AI_TIMEOUT', 120),
+        'daily_limit' => (int) env('KRISHI_AI_DAILY_LIMIT', 10), // AI questions per user per day
+        // USD per million tokens, only for the cost estimate in the admin panel.
+        'prices' => [
+            'claude-opus-5-5' => ['input' => 4.00, 'output' => 20.00, 'cache_read' => 0.20, 'cache_write' => 5.00],
+            'claude-sonnet-5-5' => ['input' => 2.00, 'output' => 10.00, 'cache_read' => 0.20, 'cache_write' => 2.50],
+            'claude-haiku-5-5' => ['input' => 0.10, 'output' => 0.50, 'cache_read' => 0.01, 'cache_write' => 0.125],
+        ],
+    ],
+
     'uploads' => [
         'max_kb' => 5120,          // accepted upload size
         'max_dimension' => 1280,   // images are resized down to this (px) to save bandwidth
