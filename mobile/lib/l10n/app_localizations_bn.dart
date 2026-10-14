@@ -828,7 +828,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get serverAddressHint =>
-      'সার্ভারের API ঠিকানা দিন, যেমন https://api.example.com/api/v1। প্রকাশিত অ্যাপে https লাগবে; সাধারণ http (যেমন http://192.168.0.10:8000/api/v1) শুধু ডিবাগ বিল্ডে কাজ করে।';
+      'সার্ভারের API ঠিকানা দিন, যেমন https://api.example.com/api/v1। Play Store-এর অ্যাপে https লাগবে; সাধারণ http (যেমন একই Wi-Fi-তে থাকা ল্যাপটপ: http://192.168.0.10:8000/api/v1) শুধু টেস্ট বিল্ডে কাজ করে।';
 
   @override
   String get resetDefault => 'আগের অবস্থায় ফেরান';

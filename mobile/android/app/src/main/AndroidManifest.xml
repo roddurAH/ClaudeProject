@@ -2,10 +2,14 @@
     <!-- Needed in release builds to reach the API. -->
     <uses-permission android:name="android.permission.INTERNET"/>
 
+    <!-- Plain http is off in release builds (see usesCleartextTraffic in
+         app/build.gradle.kts); test APKs built with KRISHI_ALLOW_HTTP=true
+         may reach a laptop on the same Wi-Fi. -->
     <application
         android:label="কৃষি সাথী"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="${usesCleartextTraffic}">
         <activity
             android:name=".MainActivity"
             android:exported="true"

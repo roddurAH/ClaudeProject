@@ -9,6 +9,7 @@
 | 📘 **Full plan and research** | [`PROJECT_PLAN.md`](PROJECT_PLAN.md) |
 | 🔌 **API reference** | [`docs/API.md`](docs/API.md) |
 | 🧑‍🌾 **Admin guide** | [`docs/ADMIN_GUIDE.md`](docs/ADMIN_GUIDE.md) |
+| 📲 **Test APK for your phone** | GitHub → Releases → *android-test* ([how](docs/ANDROID_RELEASE.md#test-apk-for-your-own-phone-no-play-store)) |
 | 🚀 **Publish on Google Play** | [`docs/ANDROID_RELEASE.md`](docs/ANDROID_RELEASE.md) |
 
 <p>

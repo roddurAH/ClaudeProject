@@ -12,6 +12,28 @@ Play only accepts app bundles for new apps; an `.apk` is still useful to install
 
 ---
 
+## Test APK for your own phone (no Play Store)
+
+Every push that changes `mobile/` runs the **Android test APK** workflow on GitHub ([`.github/workflows/android-test-apk.yml`](../.github/workflows/android-test-apk.yml)).
+It builds `krishi-sathi-test.apk` and publishes it as the **`android-test` pre-release**:
+
+1. On the phone, open the repository on GitHub → **Releases** → *Krishi Sathi – test APK* → tap `krishi-sathi-test.apk`.
+2. Open the download and allow **Install unknown apps** for your browser when Android asks.
+3. A newer test build is signed with a different throw-away key, so **uninstall the old test app first**.
+
+To build one by hand: GitHub → **Actions → Android test APK → Run workflow** (you can also enter a server address to build into the app).
+On your own computer: `KRISHI_ALLOW_HTTP=true flutter build apk --release` in `mobile/` (Windows: `set KRISHI_ALLOW_HTTP=true` first) → `build/app/outputs/flutter-apk/app-release.apk`.
+
+**Connect the test app to the backend on your laptop (XAMPP):**
+1. Phone and laptop on the **same Wi-Fi**.
+2. In `backend/`: `php artisan serve --host=0.0.0.0 --port=8000`. Find the laptop's IP with `ipconfig` (e.g. `192.168.0.10`) and allow port 8000 in Windows Firewall.
+3. In the app: **Settings → Server address (advanced)** → `http://192.168.0.10:8000/api/v1` → Save.
+
+Without a server the app still works offline (crop doctor, calendar, calculator, articles). Prices, weather, alerts and *Ask an expert* need the server.
+Test APKs allow plain `http` and use a debug key, so **never upload them to Google Play**.
+
+---
+
 ## 0. Before you build: checklist
 
 The published app talks to **your server over HTTPS**. Release builds block plain `http`, and they have **no built-in server address** unless you give one at build time. Without one the app works offline only, until the user types an address in Settings.

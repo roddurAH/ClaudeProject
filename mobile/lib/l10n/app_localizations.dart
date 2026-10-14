@@ -1595,7 +1595,7 @@ abstract class AppLocalizations {
   /// No description provided for @serverAddressHint.
   ///
   /// In en, this message translates to:
-  /// **'Enter your server\'s API address, e.g. https://api.example.com/api/v1. The published app needs https; plain http (e.g. http://192.168.0.10:8000/api/v1) only works in debug builds.'**
+  /// **'Enter your server\'s API address, e.g. https://api.example.com/api/v1. The Play Store app needs https; plain http (e.g. a laptop on the same Wi-Fi: http://192.168.0.10:8000/api/v1) only works in test builds.'**
   String get serverAddressHint;
 
   /// No description provided for @resetDefault.

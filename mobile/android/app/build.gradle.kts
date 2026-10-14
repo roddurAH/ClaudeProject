@@ -16,11 +16,15 @@ plugins {
 // See docs/ANDROID_RELEASE.md. Without that file, release builds are signed
 // with the debug key: fine for installing on test phones, rejected by Play.
 // Set KRISHI_UNSIGNED_RELEASE=true to produce an unsigned build to sign later.
+//
+// Test APKs: KRISHI_ALLOW_HTTP=true lets a release build use plain http, e.g. a
+// laptop running the backend on the same Wi-Fi. Never for Play Store builds.
 val keystorePropertiesFile = rootProject.file("key.properties")
 val keystoreProperties = Properties().apply {
     if (keystorePropertiesFile.exists()) load(FileInputStream(keystorePropertiesFile))
 }
 val unsignedRelease = System.getenv("KRISHI_UNSIGNED_RELEASE") == "true"
+val allowHttp = System.getenv("KRISHI_ALLOW_HTTP") == "true"
 
 android {
     namespace = "com.krishisathi.app"
@@ -41,6 +45,8 @@ android {
         // Increase the number after "+" for every Play Store upload.
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        // Debug and profile builds always allow http (src/debug, src/profile manifests).
+        manifestPlaceholders["usesCleartextTraffic"] = allowHttp.toString()
     }
 
     signingConfigs {
