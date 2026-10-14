@@ -1,0 +1,468 @@
+{
+  "@@locale": "en",
+  "appTitle": "Krishi Sathi",
+  "appTagline": "Your farming companion",
+  "welcome": "Welcome",
+  "chooseLanguage": "Choose your language",
+  "whoAreYou": "Who are you?",
+  "whoAreYouHint": "We will show the most useful things first.",
+  "userTypeFarmer": "Farmer",
+  "userTypeFarmerDesc": "I grow crops in the field",
+  "userTypeGardener": "Home / rooftop gardener",
+  "userTypeGardenerDesc": "I grow vegetables or fruit at home",
+  "userTypeLearner": "Student / enthusiast",
+  "userTypeLearnerDesc": "I want to learn about farming",
+  "userTypeExtension": "Extension worker",
+  "userTypeExtensionDesc": "I advise farmers",
+  "chooseDistrict": "Choose your district",
+  "chooseDistrictHint": "For local weather and nearby market prices",
+  "searchDistrict": "Search district",
+  "next": "Next",
+  "back": "Back",
+  "start": "Start",
+  "today": "Today",
+  "featureCropDoctor": "Crop problems",
+  "featureCropDoctorDesc": "Pests, diseases & solutions",
+  "featurePrices": "Market prices",
+  "featurePricesDesc": "Today's prices near you",
+  "featureWeather": "Weather",
+  "featureWeatherDesc": "Forecast & farm advice",
+  "featureAskExpert": "Ask an expert",
+  "featureAskExpertDesc": "Send a photo, get advice",
+  "featureMyCrops": "My crops",
+  "featureMyCropsDesc": "Task calendar for your field",
+  "featureCalculator": "Fertilizer calculator",
+  "featureCalculatorDesc": "How much, and the fair price",
+  "featureSowNow": "What to plant now",
+  "featureSowNowDesc": "Crops for this month",
+  "featureArticles": "Farming tips",
+  "featureArticlesDesc": "Guides for farm & rooftop",
+  "callHelpline": "Free advice: call {number}",
+  "@callHelpline": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "callHelplineDesc": "Agriculture Call Centre",
+  "thisWeekTasks": "This week's tasks",
+  "seeAll": "See all",
+  "offlineNotice": "No internet – showing saved information ({time})",
+  "@offlineNotice": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "retry": "Try again",
+  "errorNetwork": "No internet connection.",
+  "errorServer": "Server problem. Please try again later.",
+  "errorGeneric": "Something went wrong.",
+  "errorTooMany": "Too many attempts. Please wait a little.",
+  "errorSessionExpired": "Please log in again.",
+  "justNow": "just now",
+  "minutesAgo": "{n} min ago",
+  "@minutesAgo": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "hoursAgo": "{n} hours ago",
+  "@hoursAgo": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "daysAgo": "{n} days ago",
+  "@daysAgo": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "searchCrops": "Search crop",
+  "filterAll": "All",
+  "filterGarden": "Rooftop",
+  "categoryCereal": "Cereals",
+  "categoryVegetable": "Vegetables",
+  "categoryFruit": "Fruits",
+  "categoryPulse": "Pulses",
+  "categoryOilseed": "Oilseeds",
+  "categoryFibre": "Fibre",
+  "categorySpice": "Spices",
+  "tabProblems": "Problems",
+  "tabGuide": "How to grow",
+  "tabCalendar": "Calendar",
+  "tabFertilizer": "Fertilizer",
+  "season": "Season",
+  "seasonRabi": "Rabi (winter)",
+  "seasonKharif1": "Kharif-1 (summer)",
+  "seasonKharif2": "Kharif-2 (monsoon)",
+  "seasonYearRound": "Year round",
+  "sowingTime": "Sowing / planting",
+  "harvestTime": "Harvest",
+  "duration": "Duration",
+  "daysCount": "{n} days",
+  "@daysCount": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "gardenFriendly": "Good for rooftop",
+  "whereIsProblem": "Where do you see the problem?",
+  "partAll": "All",
+  "partLeaf": "Leaf",
+  "partStem": "Stem",
+  "partFruit": "Fruit",
+  "partGrain": "Grain/ear",
+  "partRoot": "Root/tuber",
+  "partWhole": "Whole plant",
+  "typePest": "Insect pest",
+  "typeDisease": "Disease",
+  "typeNutrient": "Nutrient deficiency",
+  "typeWeed": "Weed",
+  "typePhysiological": "Other",
+  "severityHigh": "Serious",
+  "symptoms": "How to recognise it",
+  "prevention": "Prevention & control – do this first",
+  "organicControl": "Natural / organic control",
+  "chemicalControl": "Chemical control – last resort",
+  "chemicalWarning": "Use chemicals only when really needed. Wear a mask and gloves, follow the label dose and do not harvest before the waiting period ends.",
+  "notSureAskExpert": "Not sure? Ask an expert",
+  "listen": "Listen",
+  "stopListening": "Stop",
+  "ttsUnavailable": "Voice is not available on this phone. Install Google Text-to-Speech with Bangla.",
+  "noProblemsForPart": "No problems listed for this part.",
+  "stageDay": "Day {n}",
+  "@stageDay": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "stageDaysBefore": "{n} days before",
+  "@stageDaysBefore": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarExplain": "Day 0 = the day you sow or transplant.",
+  "addToMyCrops": "Add to My crops",
+  "noCalendar": "No calendar for this crop yet.",
+  "perBighaShort": "per bigha",
+  "calculateForMyLand": "Calculate for my land",
+  "noFertilizerData": "No fertilizer recommendation for this crop yet.",
+  "photoTapToLoad": "Tap to load photo",
+  "market": "Market",
+  "nearestMarket": "Nearest: {market}",
+  "@nearestMarket": {
+    "placeholders": {
+      "market": {
+        "type": "String"
+      }
+    }
+  },
+  "wholesale": "Wholesale",
+  "retail": "Retail",
+  "pricesOfDate": "Prices on {date}",
+  "@pricesOfDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "trendUp": "Rising",
+  "trendDown": "Falling",
+  "trendStable": "Stable",
+  "unitKg": "kg",
+  "unitMaund": "maund",
+  "unitPiece": "piece",
+  "unitHali": "hali (4)",
+  "unitDozen": "dozen",
+  "unitLitre": "litre",
+  "perUnit": "per {unit}",
+  "@perUnit": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "last30Days": "Last 30 days",
+  "highest": "Highest",
+  "lowest": "Lowest",
+  "average": "Average",
+  "demoDataWarning": "Sample data for testing – not real market prices.",
+  "noPrices": "No prices available yet.",
+  "source": "Source: {source}",
+  "@source": {
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "priceTip": "Compare markets before selling. If prices fall at harvest time, storing part of the crop and selling later may pay more.",
+  "priceHistory": "Price trend",
+  "weatherIn": "Weather in {district}",
+  "@weatherIn": {
+    "placeholders": {
+      "district": {
+        "type": "String"
+      }
+    }
+  },
+  "farmAdvice": "Farm advice",
+  "next7Days": "Next 7 days",
+  "humidity": "Humidity",
+  "rain": "Rain",
+  "wind": "Wind",
+  "millimetre": "mm",
+  "staleWeather": "Could not refresh – showing the last forecast.",
+  "forecastSource": "Forecast: {source}",
+  "@forecastSource": {
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "chooseDistrictFirst": "Choose your district in Settings to see the weather.",
+  "wClear": "Clear sky",
+  "wPartlyCloudy": "Partly cloudy",
+  "wCloudy": "Cloudy",
+  "wFog": "Fog",
+  "wDrizzle": "Drizzle",
+  "wRain": "Rain",
+  "wShowers": "Rain showers",
+  "wThunder": "Thunderstorm",
+  "tomorrow": "Tomorrow",
+  "myQuestions": "My questions",
+  "communityAnswers": "Answers for all",
+  "askQuestion": "Ask a question",
+  "questionHint": "Describe the problem: which crop, what you see, since when…",
+  "cropOptional": "Crop (optional)",
+  "noCropSelected": "General question",
+  "addPhoto": "Add a photo – it helps a lot",
+  "camera": "Camera",
+  "gallery": "Gallery",
+  "removePhoto": "Remove photo",
+  "send": "Send",
+  "questionSent": "Question sent. An expert will answer soon.",
+  "questionQueued": "No internet. Your question is saved and will be sent automatically.",
+  "pendingUploads": "{n} question(s) waiting to be sent",
+  "@pendingUploads": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "sendNow": "Send now",
+  "statusPending": "Waiting for answer",
+  "statusAnswered": "Answered",
+  "statusClosed": "Closed",
+  "expertAnswer": "Expert's answer",
+  "noQuestionsYet": "You have not asked anything yet.",
+  "noCommunityAnswers": "No public answers yet.",
+  "urgentCall": "Urgent? Call {number} – it is free",
+  "@urgentCall": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "questionTooShort": "Please write a little more.",
+  "yourQuestion": "Your question",
+  "login": "Log in",
+  "register": "Create account",
+  "loginNeeded": "Log in to ask experts. It is free.",
+  "yourName": "Your name",
+  "mobileNumber": "Mobile number",
+  "pin": "PIN (4–6 digits)",
+  "confirmPin": "Type the PIN again",
+  "pinMismatch": "The PINs do not match.",
+  "invalidPhone": "Enter a valid number, e.g. 01712345678",
+  "invalidPin": "PIN must be 4 to 6 digits.",
+  "requiredField": "Required",
+  "haveAccount": "Already have an account? Log in",
+  "noAccount": "New here? Create an account",
+  "logout": "Log out",
+  "loggedInAs": "Logged in as {name}",
+  "@loggedInAs": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pinHint": "Remember your PIN and never share it.",
+  "myCropsEmpty": "Add a crop to get a day-by-day task list for your field.",
+  "addCrop": "Add crop",
+  "chooseCrop": "Choose a crop",
+  "startDate": "Sowing / transplanting date",
+  "plotName": "Field name (optional)",
+  "plotNameHint": "e.g. North field, Roof",
+  "save": "Save",
+  "delete": "Delete",
+  "deleteConfirm": "Delete this crop and its task list?",
+  "cancel": "Cancel",
+  "cropDay": "Day {n}",
+  "@cropDay": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "nextTask": "Next: {task}",
+  "@nextTask": {
+    "placeholders": {
+      "task": {
+        "type": "String"
+      }
+    }
+  },
+  "allTasksDone": "All tasks done",
+  "taskOverdue": "Overdue",
+  "taskToday": "Today",
+  "taskInDays": "in {n} days",
+  "@taskInDays": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "taskDaysAgo": "{n} days ago",
+  "@taskDaysAgo": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "markDone": "Mark as done",
+  "noTasksThisWeek": "No tasks this week.",
+  "savedOnPhone": "Saved on this phone – works without internet.",
+  "landSize": "Land size",
+  "unitDecimal": "Decimal",
+  "unitKatha": "Katha",
+  "unitBigha": "Bigha",
+  "unitAcre": "Acre",
+  "unitHectare": "Hectare",
+  "bighaNote": "1 bigha = {n} decimal here. Change it in Settings if your area differs.",
+  "@bighaNote": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "fertilizerNeeded": "Fertilizer needed",
+  "estimatedCost": "Cost at government price: ৳{amount}",
+  "@estimatedCost": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "officialPrices": "Government fertilizer prices",
+  "officialPriceNote": "If a dealer charges more, ask for a receipt and inform the Upazila Agriculture Office.",
+  "calcDisclaimer": "General recommendation for medium-fertility soil. A soil test gives the most accurate dose.",
+  "kg": "{n} kg",
+  "@kg": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "gram": "{n} g",
+  "@gram": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "perKg": "৳{n}/kg",
+  "@perKg": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "whenToApply": "When to apply",
+  "enterLandSize": "Enter the size of your land",
+  "sowInMonth": "Sow / plant in {month}",
+  "@sowInMonth": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "harvestInMonth": "Harvest in {month}",
+  "@harvestInMonth": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "rooftopOnly": "Only rooftop-friendly",
+  "nothingThisMonth": "Nothing listed for this month.",
+  "settings": "Settings",
+  "language": "Language",
+  "district": "District",
+  "iAmA": "I am a",
+  "textSize": "Text size",
+  "textNormal": "Normal",
+  "textLarge": "Large",
+  "textExtraLarge": "Extra large",
+  "dataSaver": "Data saver",
+  "dataSaverDesc": "Load photos only when you tap them",
+  "bighaSize": "1 bigha = how many decimal?",
+  "updateNow": "Update information now",
+  "contentUpdated": "Knowledge base updated {time}",
+  "@contentUpdated": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "contentBuiltIn": "Using information built into the app",
+  "upToDate": "Information is up to date.",
+  "serverAddress": "Server address (advanced)",
+  "serverAddressHint": "For testing on a phone, use your computer's IP, e.g. http://192.168.0.10:8000/api/v1",
+  "resetDefault": "Reset to default",
+  "about": "About",
+  "aboutText": "Krishi Sathi gives farmers and gardeners in Bangladesh simple advice on crops, pests, fertilizer, weather and market prices. The advice is general – for serious problems contact your Upazila Agriculture Office or call 16123.",
+  "version": "Version {v}",
+  "@version": {
+    "placeholders": {
+      "v": {
+        "type": "String"
+      }
+    }
+  },
+  "account": "Account"
+}

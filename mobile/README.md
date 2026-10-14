@@ -1,0 +1,55 @@
+# Krishi Sathi: mobile app (Flutter)
+
+One codebase for **Android, iOS, web, Windows, macOS and Linux**. Bangla-first, offline-first.
+
+## Run
+
+```bash
+flutter pub get
+flutter run -d chrome                 # web (API: http://localhost:8000/api/v1)
+flutter run                           # Android emulator (API: http://10.0.2.2:8000/api/v1)
+flutter run --dart-define=API_BASE_URL=http://192.168.0.10:8000/api/v1   # real phone on your Wi-Fi
+```
+The server address can also be changed inside the app: **Settings → Server address**.
+
+Requires **Flutter 3.47+** (`flutter upgrade`). The backend must be running (see `../backend/README.md`). Without it the app still works offline with its built-in knowledge base.
+
+## Build
+
+```bash
+flutter build apk --release --dart-define=API_BASE_URL=https://your-domain/api/v1
+flutter build appbundle --release --dart-define=API_BASE_URL=https://your-domain/api/v1   # Play Store
+flutter build web --release --no-web-resources-cdn --dart-define=API_BASE_URL=https://your-domain/api/v1
+```
+Before a release, refresh the built-in knowledge base from the server: `php artisan krishi:export-content` (in `backend/`).
+
+## Code map
+
+```
+lib/
+  main.dart, app.dart, app_services.dart   start-up, providers, dependency wiring
+  core/        config, network (Dio), storage (Hive), theme, utils (Bangla digits & calendar, units, fertilizer maths), widgets
+  models/      data classes (bilingual fields + pick(bn, en, lang))
+  data/        repositories: API + offline cache (CachedResult), question outbox
+  state/       ChangeNotifier controllers: settings, reference, content, auth, my crops
+  features/    one folder per screen group: onboarding, home, crops, prices, weather,
+               ask_expert, auth, my_crops, calculator, seasonal, articles, settings
+  l10n/        app_en.arb, app_bn.arb + generated AppLocalizations
+assets/seed/   content.json, districts.json  (offline first launch)
+assets/fonts/  Hind Siliguri (SIL OFL)
+tool/strings.py  single source of all UI strings → run it to regenerate the .arb files
+test/          unit, repository (offline/ETag/outbox) and widget tests
+```
+
+## Change UI text
+
+1. Edit `tool/strings.py` (English + Bangla side by side).
+2. `python tool/strings.py && flutter gen-l10n`
+3. Use it as `AppLocalizations.of(context).yourKey`.
+
+## Test
+
+```bash
+flutter analyze
+flutter test        # 20 tests
+```

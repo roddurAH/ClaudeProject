@@ -1,0 +1,35 @@
+{
+    "name": "কৃষি সাথী – Krishi Sathi",
+    "short_name": "কৃষি সাথী",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#F3F6EF",
+    "theme_color": "#2E7D32",
+    "description": "Krishi Sathi – farm advice, market prices and weather for Bangladesh",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}

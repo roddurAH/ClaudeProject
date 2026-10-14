@@ -1,0 +1,18 @@
+{
+    "Enter a valid Bangladeshi mobile number (01XXXXXXXXX).": "সঠিক মোবাইল নম্বর দিন (০১XXXXXXXXX)।",
+    "This mobile number is already registered. Please log in.": "এই মোবাইল নম্বরে আগেই অ্যাকাউন্ট খোলা হয়েছে। অনুগ্রহ করে লগইন করুন।",
+    "PIN must be 4 to 6 digits.": "পিন ৪ থেকে ৬ সংখ্যার হতে হবে।",
+    "Mobile number or PIN is incorrect.": "মোবাইল নম্বর বা পিন সঠিক নয়।",
+    "This account has been disabled. Please contact support.": "এই অ্যাকাউন্টটি বন্ধ করা হয়েছে। সহায়তার জন্য যোগাযোগ করুন।",
+    "This account has been disabled.": "এই অ্যাকাউন্টটি বন্ধ করা হয়েছে।",
+    "Too many wrong attempts. Try again in :minutes minutes.": "অনেকবার ভুল পিন দেওয়া হয়েছে। :minutes মিনিট পরে আবার চেষ্টা করুন।",
+    "Current PIN is incorrect.": "বর্তমান পিন সঠিক নয়।",
+    "Logged out.": "লগআউট হয়েছে।",
+    "Weather service is temporarily unavailable. Please try again later.": "আবহাওয়ার তথ্য এই মুহূর্তে পাওয়া যাচ্ছে না। একটু পরে আবার চেষ্টা করুন।",
+    "Too Many Attempts.": "অনেকবার চেষ্টা করা হয়েছে। কিছুক্ষণ পরে আবার চেষ্টা করুন।",
+    "Unauthenticated.": "অনুগ্রহ করে আবার লগইন করুন।",
+    "Not Found": "খুঁজে পাওয়া যায়নি।",
+    "Server Error": "সার্ভারে সমস্যা হয়েছে।",
+    "(and :count more error)": "(এবং আরও :countটি ভুল)",
+    "(and :count more errors)": "(এবং আরও :countটি ভুল)"
+}

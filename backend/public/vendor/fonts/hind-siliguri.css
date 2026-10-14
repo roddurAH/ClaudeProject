@@ -1,0 +1,4 @@
+/* Hind Siliguri (SIL Open Font License) – served locally so the admin panel
+   works without internet access. */
+@font-face { font-family: "Hind Siliguri"; font-weight: 400; font-display: swap; src: url("HindSiliguri-Regular.ttf") format("truetype"); }
+@font-face { font-family: "Hind Siliguri"; font-weight: 600; font-display: swap; src: url("HindSiliguri-SemiBold.ttf") format("truetype"); }
