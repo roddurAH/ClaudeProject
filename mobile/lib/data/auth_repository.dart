@@ -58,11 +58,29 @@ class AuthRepository {
       // Logging out must work offline too; the token expires on the server anyway.
     }
     await clearSession();
+    await _forgetUserData();
+  }
+
+  /// Permanently deletes the account on the server (Google Play requirement).
+  /// Throws [ApiException] (e.g. wrong PIN, offline) and then keeps the session.
+  Future<void> deleteAccount(String pin) async {
+    await _api.delete('/me', data: {'pin': pin});
+    await clearSession();
+    await _forgetUserData();
   }
 
   Future<void> clearSession() async {
     await _store.settings.delete(_tokenKey);
     await _store.settings.delete(_userKey);
+  }
+
+  /// The next person to sign in on this phone must not see (or send) the
+  /// previous user's questions. "My crops" is not tied to an account and stays.
+  Future<void> _forgetUserData() async {
+    await _store.cache.delete('questions:mine');
+    for (final key in _store.outbox.keys.toList()) {
+      await _store.outbox.delete(key);
+    }
   }
 
   Future<AppUser> _saveSession(Map<String, dynamic> json) async {

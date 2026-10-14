@@ -1,6 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:krishi_sathi/core/network/api_client.dart';
 import 'package:krishi_sathi/core/network/api_exception.dart';
 import 'package:krishi_sathi/core/storage/local_store.dart';
+import 'package:krishi_sathi/data/auth_repository.dart';
 import 'package:krishi_sathi/data/content_repository.dart';
 import 'package:krishi_sathi/data/price_repository.dart';
 import 'package:krishi_sathi/data/question_repository.dart';
@@ -118,6 +121,51 @@ void main() {
 
       expect(() => repo.ask(body: 'question text'), throwsA(isA<ApiException>()));
       expect(repo.pending(), isEmpty);
+    });
+  });
+
+  test('no server address configured behaves like offline, without any request', () async {
+    final adapter = FakeAdapter((o) async => json({}));
+    final dio = Dio()..httpClientAdapter = adapter;
+    final api = ApiClient(baseUrl: () => '', token: () => null, language: () => 'bn', dio: dio);
+
+    expect(() => api.get('/meta'), throwsA(isA<ApiException>().having((e) => e.isNetwork, 'isNetwork', true)));
+    expect(adapter.requests, isEmpty);
+  });
+
+  group('delete account', () {
+    Future<LocalStore> signedInStore() async {
+      final store = LocalStore.memory();
+      await store.settings.put('auth_token', 'secret');
+      await store.settings.put('auth_user', '{"id":1,"name":"করিম","phone":"01712345678","role":"farmer"}');
+      await store.writeCache('questions:mine', {'data': []});
+      await store.outbox.put('q1', '{}');
+      return store;
+    }
+
+    test('sends the PIN, then forgets the session and this user\'s questions', () async {
+      final store = await signedInStore();
+      final (api, adapter) = fakeApiClient((o) async => json({'message': 'deleted'}), token: () => 'secret');
+      final repo = AuthRepository(api, store);
+
+      await repo.deleteAccount('12345');
+
+      expect(adapter.requests.single.method, 'DELETE');
+      expect(adapter.requests.single.path, endsWith('/me'));
+      expect(adapter.requests.single.data, {'pin': '12345'});
+      expect(repo.token, isNull);
+      expect(store.readCache('questions:mine'), isNull);
+      expect(store.outbox.keys, isEmpty);
+    });
+
+    test('a wrong PIN keeps the user signed in', () async {
+      final store = await signedInStore();
+      final (api, _) = fakeApiClient((o) async => json({'message': 'PIN is incorrect.', 'errors': {'pin': ['PIN is incorrect.']}}, status: 422));
+      final repo = AuthRepository(api, store);
+
+      await expectLater(repo.deleteAccount('99999'), throwsA(isA<ApiException>().having((e) => e.firstMessage, 'message', 'PIN is incorrect.')));
+      expect(repo.token, 'secret');
+      expect(store.outbox.keys, hasLength(1));
     });
   });
 }

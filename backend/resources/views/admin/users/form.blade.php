@@ -39,4 +39,13 @@
         <button class="btn btn-brand"><i class="bi bi-save"></i> Save</button>
     </form>
 </div></div>
+
+@if ($user->exists && $user->role === \App\Enums\Role::Farmer)
+    <div class="card mt-3 border-danger"><div class="card-body">
+        <h2 class="h6 text-danger">Delete account</h2>
+        <p class="small text-muted mb-2">For deletion requests from users who cannot sign in (e.g. forgot their PIN). Verify that the request really comes from the owner of this number first.
+            Deletes the profile, all questions, photos and answers permanently. Users can also do this themselves in the app or at <a href="{{ route('account.delete') }}" target="_blank">{{ route('account.delete') }}</a>.</p>
+        <x-delete-button :action="route('admin.users.destroy', $user)" label="Delete account and all data" confirm="Permanently delete this account, its questions, photos and answers?" />
+    </div></div>
+@endif
 @endsection

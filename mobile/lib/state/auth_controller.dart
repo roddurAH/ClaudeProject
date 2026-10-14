@@ -27,6 +27,12 @@ class AuthController extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> deleteAccount(String pin) async {
+    await _repo.deleteAccount(pin);
+    user = null;
+    notifyListeners();
+  }
+
   /// Called when the server rejects our token.
   Future<void> sessionExpired() async {
     if (user == null) return;

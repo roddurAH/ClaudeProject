@@ -8,3 +8,8 @@ Future<T?> push<T>(BuildContext context, Widget page) =>
 Future<void> callNumber(String number) async {
   await launchUrl(Uri(scheme: 'tel', path: number));
 }
+
+/// Opens a web page (e.g. the privacy policy) in the phone's browser.
+Future<void> openWebPage(Uri uri) async {
+  await launchUrl(uri, mode: LaunchMode.externalApplication);
+}

@@ -195,6 +195,12 @@ Active national alerts and alerts targeted at that district, most severe first.
 ### `POST /auth/logout` 🔒 · `GET /me` 🔒 · `PATCH /me` 🔒
 `PATCH /me` accepts `name`, `district_id`, `user_type`, `preferred_language`, and `pin` + `current_pin` to change the PIN.
 
+### `DELETE /me` 🔒
+`{ "pin": "12345" }` → `200 { "message": "Your account and all your data have been deleted." }`.
+Permanently deletes the user, all their sign-in tokens, questions, photos and the answers to them (Google Play account-deletion requirement).
+A wrong PIN returns `422` (`errors.pin`) and counts towards the same 5-attempt lockout as login. Staff accounts get `422` (an admin disables them instead).
+People without the app can do the same on the web page **`/account/delete`** (phone + PIN); the privacy policy is at **`/privacy`** (`?lang=en` for English).
+
 ---
 
 ## Ask an expert

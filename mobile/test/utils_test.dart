@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:krishi_sathi/core/config/app_config.dart';
 import 'package:krishi_sathi/core/utils/bangla.dart';
 import 'package:krishi_sathi/core/utils/fertilizer_calc.dart';
 import 'package:krishi_sathi/core/utils/land_units.dart';
@@ -6,6 +7,21 @@ import 'package:krishi_sathi/models/content.dart';
 import 'package:krishi_sathi/models/my_crop.dart';
 
 void main() {
+  test('app version comparison for forced updates', () {
+    expect(AppConfig.isOlderVersion('1.0.0', '1.0.1'), isTrue);
+    expect(AppConfig.isOlderVersion('1.2.10', '1.10.0'), isTrue);
+    expect(AppConfig.isOlderVersion('1.0.0', '1.0.0'), isFalse);
+    expect(AppConfig.isOlderVersion('2.0', '1.9.9'), isFalse);
+    expect(AppConfig.isOlderVersion('1.0.0', 'garbage'), isFalse);
+  });
+
+  test('public web pages live next to the API', () {
+    expect(AppConfig.webPageUri('https://krishi.example.com/api/v1/', '/privacy').toString(), 'https://krishi.example.com/privacy');
+    expect(AppConfig.webPageUri('https://example.com/krishi/api/v1', '/privacy', language: 'en').toString(),
+        'https://example.com/krishi/privacy?lang=en');
+    expect(AppConfig.webPageUri('', '/privacy'), isNull);
+  });
+
   group('Bangla', () {
     test('converts digits both ways', () {
       expect(Bangla.digits('2026', 'bn'), '২০২৬');

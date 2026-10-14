@@ -9,6 +9,7 @@
 | 📘 **Full plan and research** | [`PROJECT_PLAN.md`](PROJECT_PLAN.md) |
 | 🔌 **API reference** | [`docs/API.md`](docs/API.md) |
 | 🧑‍🌾 **Admin guide** | [`docs/ADMIN_GUIDE.md`](docs/ADMIN_GUIDE.md) |
+| 🚀 **Publish on Google Play** | [`docs/ANDROID_RELEASE.md`](docs/ANDROID_RELEASE.md) |
 
 <p>
 <img src="docs/screenshots/app-03-home-farmer.jpg" width="190" alt="Home">
@@ -56,8 +57,8 @@ See [PROJECT_PLAN.md §11](PROJECT_PLAN.md#11-local-installation-and-configurati
 ## Tests
 
 ```bash
-cd backend && php artisan test   # 64 tests (SQLite by default; MySQL also supported)
-cd mobile  && flutter test       # 20 tests (unit, repository, widget journeys)
+cd backend && php artisan test   # 70 tests (SQLite by default; MySQL also supported)
+cd mobile  && flutter test       # 25 tests (unit, repository, widget journeys)
 ```
 
 A real-browser end-to-end walkthrough is in [`tools/e2e/`](tools/e2e/).

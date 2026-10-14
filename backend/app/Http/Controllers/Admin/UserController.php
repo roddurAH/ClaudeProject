@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserRequest;
 use App\Models\District;
 use App\Models\User;
+use App\Services\AccountDeletionService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -17,6 +18,8 @@ use Illuminate\View\View;
  * Admins manage app users and expert / data-entry staff.
  * Only a super admin can create or change admin and super-admin accounts,
  * and nobody can demote or disable their own account (prevents lock-out).
+ * Only app-user (farmer) accounts can be deleted; staff are disabled instead
+ * so their answers stay attached to farmers' questions.
  */
 class UserController extends Controller
 {
@@ -97,6 +100,15 @@ class UserController extends Controller
         }
 
         return redirect()->route('admin.users.index')->with('status', 'User saved.');
+    }
+
+    /** Handles deletion requests from app users who cannot sign in themselves. */
+    public function destroy(User $user, AccountDeletionService $accounts): RedirectResponse
+    {
+        abort_unless($user->role === Role::Farmer, 403, 'Staff accounts cannot be deleted. Untick "Account active" instead.');
+        $accounts->delete($user);
+
+        return redirect()->route('admin.users.index')->with('status', 'Account and all its data deleted.');
     }
 
     /** @return list<Role> */

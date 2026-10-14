@@ -21,6 +21,9 @@ cd build/web && python -m http.server 8080
 cd tools/e2e
 npm install && npx playwright install chromium
 npm run walkthrough
+
+# Google Play phone screenshots (1080×1920, 9:16)
+VIEWPORT=360x640@3 OUT=./play npm run walkthrough
 ```
 
 Notes

@@ -828,7 +828,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get serverAddressHint =>
-      'ফোনে পরীক্ষার জন্য কম্পিউটারের IP দিন, যেমন http://192.168.0.10:8000/api/v1';
+      'সার্ভারের API ঠিকানা দিন, যেমন https://api.example.com/api/v1। প্রকাশিত অ্যাপে https লাগবে; সাধারণ http (যেমন http://192.168.0.10:8000/api/v1) শুধু ডিবাগ বিল্ডে কাজ করে।';
 
   @override
   String get resetDefault => 'আগের অবস্থায় ফেরান';
@@ -847,4 +847,33 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get account => 'অ্যাকাউন্ট';
+
+  @override
+  String get privacyPolicy => 'গোপনীয়তা নীতি';
+
+  @override
+  String get deleteAccount => 'অ্যাকাউন্ট মুছে ফেলুন';
+
+  @override
+  String get deleteAccountWarning =>
+      'আপনার অ্যাকাউন্ট, সব প্রশ্ন, ছবি ও সেগুলোর উত্তর স্থায়ীভাবে মুছে যাবে। এটি আর ফেরত আনা যাবে না। এই ফোনে রাখা “আমার ফসল” থেকে যাবে।';
+
+  @override
+  String get deleteAccountPin => 'নিশ্চিত করতে আপনার পিন দিন';
+
+  @override
+  String get deleteAccountConfirm => 'স্থায়ীভাবে মুছুন';
+
+  @override
+  String get accountDeleted => 'আপনার অ্যাকাউন্ট মুছে ফেলা হয়েছে।';
+
+  @override
+  String get updateAppTitle => 'অ্যাপটি হালনাগাদ করুন';
+
+  @override
+  String get updateAppText =>
+      'পুরোনো সংস্করণে কিছু সুবিধা (বাজারদর, প্রশ্ন) কাজ নাও করতে পারে। Google Play থেকে নতুন সংস্করণ নিন।';
+
+  @override
+  String get updateApp => 'হালনাগাদ';
 }

@@ -27,6 +27,7 @@ return [
         'numeric' => ':attribute :max এর বেশি হতে পারবে না।',
     ],
     'required_with' => ':values দিলে :attribute-ও দিতে হবে।',
+    'accepted' => ':attribute-এ টিক দিতে হবে।',
 
     'attributes' => [
         'name' => 'নাম',
@@ -37,5 +38,6 @@ return [
         'image' => 'ছবি',
         'crop_id' => 'ফসল',
         'district_id' => 'জেলা',
+        'confirm' => 'নিশ্চিতকরণের ঘর',
     ],
 ];

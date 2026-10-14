@@ -44,6 +44,8 @@ class ApiClient {
 
   Future<ApiResponse> patch(String path, {Object? data}) => _send('PATCH', path, data: data);
 
+  Future<ApiResponse> delete(String path, {Object? data}) => _send('DELETE', path, data: data);
+
   /// Multipart upload (used for question photos). Works on web and mobile.
   Future<ApiResponse> postMultipart(String path, Map<String, dynamic> fields,
       {List<int>? fileBytes, String fileField = 'image', String fileName = 'photo.jpg'}) {
@@ -57,9 +59,14 @@ class ApiClient {
   Future<ApiResponse> _send(String method, String path,
       {Map<String, dynamic>? query, Object? data, Map<String, String>? headers}) async {
     final bearer = token();
+    final base = baseUrl().trim();
+    if (base.isEmpty) {
+      // No server configured yet: behave exactly like being offline.
+      throw ApiException(ApiErrorType.network, message: 'No server address configured');
+    }
     try {
       final response = await _dio.request<dynamic>(
-        '${baseUrl().replaceAll(RegExp(r'/+$'), '')}$path',
+        '${base.replaceAll(RegExp(r'/+$'), '')}$path',
         queryParameters: query?..removeWhere((_, v) => v == null),
         data: data,
         options: Options(method: method, headers: {

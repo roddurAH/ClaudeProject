@@ -1,4 +1,4 @@
-package com.krishisathi.krishi_sathi
+package com.krishisathi.app
 
 import io.flutter.embedding.android.FlutterActivity
 

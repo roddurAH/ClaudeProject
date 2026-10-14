@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/config/app_config.dart';
+import '../../core/network/api_exception.dart';
 import '../../core/utils/bangla.dart';
 import '../../core/utils/nav.dart';
 import '../../core/utils/relative_time.dart';
@@ -27,6 +28,7 @@ class SettingsScreen extends StatelessWidget {
     final auth = context.watch<AuthController>();
     final district = context.watch<ReferenceController>().districtById(settings.districtId);
     final userType = UserTypeOption.all.firstWhere((t) => t.key == settings.userType, orElse: () => UserTypeOption.all.first);
+    final privacyUri = AppConfig.webPageUri(settings.apiBaseUrl, '/privacy', language: lang);
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.settings)),
@@ -127,14 +129,27 @@ class SettingsScreen extends StatelessWidget {
                 ? TextButton(onPressed: auth.logout, child: Text(l10n.logout))
                 : TextButton(onPressed: () => push(context, const LoginScreen()), child: Text(l10n.login)),
           ),
+          if (auth.isLoggedIn)
+            ListTile(
+              leading: Icon(Icons.delete_forever_outlined, color: Theme.of(context).colorScheme.error),
+              title: Text(l10n.deleteAccount, style: TextStyle(color: Theme.of(context).colorScheme.error)),
+              onTap: () => _deleteAccount(context),
+            ),
           const Divider(),
           ExpansionTile(
             leading: const Icon(Icons.dns_outlined),
             title: Text(l10n.serverAddress),
-            subtitle: Text(settings.apiBaseUrl, style: const TextStyle(fontSize: 13)),
+            subtitle: Text(settings.apiBaseUrl.isEmpty ? '—' : settings.apiBaseUrl, style: const TextStyle(fontSize: 13)),
             childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             children: [_ServerAddressEditor(settings: settings)],
           ),
+          if (privacyUri != null)
+            ListTile(
+              leading: const Icon(Icons.privacy_tip_outlined),
+              title: Text(l10n.privacyPolicy),
+              trailing: const Icon(Icons.open_in_new, size: 20),
+              onTap: () => openWebPage(privacyUri),
+            ),
           ListTile(
             leading: const Icon(Icons.info_outline),
             title: Text(l10n.about),
@@ -144,6 +159,13 @@ class SettingsScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> _deleteAccount(BuildContext context) async {
+    final deleted = await showDialog<bool>(context: context, builder: (_) => const _DeleteAccountDialog());
+    if (deleted == true && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context).accountDeleted)));
+    }
   }
 
   Future<void> _editNumber(BuildContext context, String title, double current, Future<void> Function(double) save) async {
@@ -161,6 +183,79 @@ class SettingsScreen extends StatelessWidget {
       ),
     );
     if (value != null && value > 0 && value < 1000) await save(value);
+  }
+}
+
+/// Asks for the PIN again, then deletes the account on the server.
+class _DeleteAccountDialog extends StatefulWidget {
+  const _DeleteAccountDialog();
+
+  @override
+  State<_DeleteAccountDialog> createState() => _DeleteAccountDialogState();
+}
+
+class _DeleteAccountDialogState extends State<_DeleteAccountDialog> {
+  final _pin = TextEditingController();
+  bool _busy = false;
+  String? _error;
+
+  @override
+  void dispose() {
+    _pin.dispose();
+    super.dispose();
+  }
+
+  Future<void> _submit() async {
+    final l10n = AppLocalizations.of(context);
+    final pin = Bangla.toAscii(_pin.text.trim());
+    if (pin.isEmpty) return;
+    setState(() {
+      _busy = true;
+      _error = null;
+    });
+    try {
+      await context.read<AuthController>().deleteAccount(pin);
+      if (mounted) Navigator.pop(context, true);
+    } on ApiException catch (e) {
+      if (mounted) setState(() => _error = friendlyError(e, l10n));
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final error = Theme.of(context).colorScheme.error;
+    return AlertDialog(
+      icon: Icon(Icons.warning_amber_rounded, color: error, size: 36),
+      title: Text(l10n.deleteAccount),
+      content: SingleChildScrollView(
+        child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(l10n.deleteAccountWarning),
+          const SizedBox(height: 16),
+          TextField(
+            controller: _pin,
+            enabled: !_busy,
+            obscureText: true,
+            keyboardType: TextInputType.number,
+            maxLength: 6,
+            decoration: InputDecoration(labelText: l10n.deleteAccountPin, errorText: _error, errorMaxLines: 3),
+            onSubmitted: (_) => _submit(),
+          ),
+        ]),
+      ),
+      actions: [
+        TextButton(onPressed: _busy ? null : () => Navigator.pop(context, false), child: Text(l10n.cancel)),
+        FilledButton(
+          style: FilledButton.styleFrom(backgroundColor: error, foregroundColor: Theme.of(context).colorScheme.onError),
+          onPressed: _busy ? null : _submit,
+          child: _busy
+              ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
+              : Text(l10n.deleteAccountConfirm),
+        ),
+      ],
+    );
   }
 }
 

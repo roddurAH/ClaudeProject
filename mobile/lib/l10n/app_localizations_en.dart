@@ -827,7 +827,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get serverAddressHint =>
-      'For testing on a phone, use your computer\'s IP, e.g. http://192.168.0.10:8000/api/v1';
+      'Enter your server\'s API address, e.g. https://api.example.com/api/v1. The published app needs https; plain http (e.g. http://192.168.0.10:8000/api/v1) only works in debug builds.';
 
   @override
   String get resetDefault => 'Reset to default';
@@ -846,4 +846,33 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get account => 'Account';
+
+  @override
+  String get privacyPolicy => 'Privacy policy';
+
+  @override
+  String get deleteAccount => 'Delete account';
+
+  @override
+  String get deleteAccountWarning =>
+      'Your account, all your questions, photos and their answers will be deleted permanently. This cannot be undone. \"My crops\" saved on this phone stay.';
+
+  @override
+  String get deleteAccountPin => 'Enter your PIN to confirm';
+
+  @override
+  String get deleteAccountConfirm => 'Delete permanently';
+
+  @override
+  String get accountDeleted => 'Your account has been deleted.';
+
+  @override
+  String get updateAppTitle => 'Please update the app';
+
+  @override
+  String get updateAppText =>
+      'This version is too old for some features (prices, questions). Install the new version from Google Play.';
+
+  @override
+  String get updateApp => 'Update';
 }

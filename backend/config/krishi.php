@@ -10,6 +10,12 @@
 
 return [
 
+    // Who runs this service – shown on the public privacy policy (/privacy)
+    // and the account-deletion page (/account/delete). Set both before publishing.
+    'operator_name' => env('KRISHI_OPERATOR_NAME', 'Krishi Sathi'),
+    'support_email' => env('KRISHI_SUPPORT_EMAIL'),
+    'privacy_policy_updated' => '2026-10-14',
+
     // Free government agriculture call centre (Agriculture Information Service).
     'helpline_number' => env('KRISHI_HELPLINE', '16123'),
 

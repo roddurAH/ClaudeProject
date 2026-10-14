@@ -273,12 +273,21 @@ S = [
     ("contentBuiltIn", "Using information built into the app", "অ্যাপের ভেতরের তথ্য ব্যবহার হচ্ছে"),
     ("upToDate", "Information is up to date.", "তথ্য হালনাগাদ আছে।"),
     ("serverAddress", "Server address (advanced)", "সার্ভার ঠিকানা (উন্নত)"),
-    ("serverAddressHint", "For testing on a phone, use your computer's IP, e.g. http://192.168.0.10:8000/api/v1", "ফোনে পরীক্ষার জন্য কম্পিউটারের IP দিন, যেমন http://192.168.0.10:8000/api/v1"),
+    ("serverAddressHint", "Enter your server's API address, e.g. https://api.example.com/api/v1. The published app needs https; plain http (e.g. http://192.168.0.10:8000/api/v1) only works in debug builds.", "সার্ভারের API ঠিকানা দিন, যেমন https://api.example.com/api/v1। প্রকাশিত অ্যাপে https লাগবে; সাধারণ http (যেমন http://192.168.0.10:8000/api/v1) শুধু ডিবাগ বিল্ডে কাজ করে।"),
     ("resetDefault", "Reset to default", "আগের অবস্থায় ফেরান"),
     ("about", "About", "অ্যাপ সম্পর্কে"),
     ("aboutText", "Krishi Sathi gives farmers and gardeners in Bangladesh simple advice on crops, pests, fertilizer, weather and market prices. The advice is general – for serious problems contact your Upazila Agriculture Office or call 16123.", "কৃষি সাথী বাংলাদেশের কৃষক ও বাগানিদের ফসল, পোকা-রোগ, সার, আবহাওয়া ও বাজারদর নিয়ে সহজ পরামর্শ দেয়। পরামর্শগুলো সাধারণ – গুরুতর সমস্যায় উপজেলা কৃষি অফিসে যোগাযোগ করুন বা ১৬১২৩ নম্বরে কল করুন।"),
     ("version", "Version {v}", "সংস্করণ {v}", ["v"]),
     ("account", "Account", "অ্যাকাউন্ট"),
+    ("privacyPolicy", "Privacy policy", "গোপনীয়তা নীতি"),
+    ("deleteAccount", "Delete account", "অ্যাকাউন্ট মুছে ফেলুন"),
+    ("deleteAccountWarning", "Your account, all your questions, photos and their answers will be deleted permanently. This cannot be undone. \"My crops\" saved on this phone stay.", "আপনার অ্যাকাউন্ট, সব প্রশ্ন, ছবি ও সেগুলোর উত্তর স্থায়ীভাবে মুছে যাবে। এটি আর ফেরত আনা যাবে না। এই ফোনে রাখা “আমার ফসল” থেকে যাবে।"),
+    ("deleteAccountPin", "Enter your PIN to confirm", "নিশ্চিত করতে আপনার পিন দিন"),
+    ("deleteAccountConfirm", "Delete permanently", "স্থায়ীভাবে মুছুন"),
+    ("accountDeleted", "Your account has been deleted.", "আপনার অ্যাকাউন্ট মুছে ফেলা হয়েছে।"),
+    ("updateAppTitle", "Please update the app", "অ্যাপটি হালনাগাদ করুন"),
+    ("updateAppText", "This version is too old for some features (prices, questions). Install the new version from Google Play.", "পুরোনো সংস্করণে কিছু সুবিধা (বাজারদর, প্রশ্ন) কাজ নাও করতে পারে। Google Play থেকে নতুন সংস্করণ নিন।"),
+    ("updateApp", "Update", "হালনাগাদ"),
 ]
 
 

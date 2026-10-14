@@ -2,9 +2,18 @@
 
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\MediaController;
+use App\Http\Controllers\PublicPageController;
+use App\Http\Middleware\SetPublicPageLocale;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn () => view('welcome'))->name('home');
+
+// Public pages linked from the app and the Google Play listing
+Route::middleware(SetPublicPageLocale::class)->group(function () {
+    Route::get('/privacy', [PublicPageController::class, 'privacy'])->name('privacy');
+    Route::get('/account/delete', [PublicPageController::class, 'deleteAccountForm'])->name('account.delete');
+    Route::post('/account/delete', [PublicPageController::class, 'deleteAccount'])->middleware('throttle:auth');
+});
 
 // Uploaded images (see App\Support\Media)
 Route::get('/media/{path}', MediaController::class)->where('path', '.*')->name('media');
@@ -64,7 +73,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         });
 
         Route::middleware('can:manage-users')->group(function () {
-            Route::resource('users', Admin\UserController::class)->except('show', 'destroy');
+            Route::resource('users', Admin\UserController::class)->except('show');
         });
     });
 });

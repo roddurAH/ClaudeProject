@@ -19,6 +19,11 @@ final class BanglaText
         return str_replace(self::BN_DIGITS, ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], $value);
     }
 
+    public static function toBanglaDigits(string $value): string
+    {
+        return str_replace(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], self::BN_DIGITS, $value);
+    }
+
     /**
      * Normalise a Bangladeshi mobile number to the 11-digit local form
      * (01XXXXXXXXX). Accepts +880…, 880…, spaces, dashes and Bangla digits.

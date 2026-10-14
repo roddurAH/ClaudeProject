@@ -60,6 +60,7 @@ Route::prefix('v1')->middleware('throttle:api')->group(function () {
         Route::post('auth/logout', [AuthController::class, 'logout']);
         Route::get('me', [ProfileController::class, 'show']);
         Route::patch('me', [ProfileController::class, 'update']);
+        Route::delete('me', [ProfileController::class, 'destroy'])->middleware('throttle:auth');
 
         Route::get('questions', [QuestionController::class, 'index']);
         Route::post('questions', [QuestionController::class, 'store'])->middleware('throttle:questions');

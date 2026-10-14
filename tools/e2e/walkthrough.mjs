@@ -13,11 +13,13 @@ const APP = process.env.APP_URL ?? 'http://127.0.0.1:8080/';
 const ADMIN = process.env.ADMIN_URL ?? 'http://127.0.0.1:8000/admin';
 const OUT = process.env.OUT ?? './screenshots';
 const PHONE = process.env.TEST_PHONE ?? '01812345678'; // must not exist yet
+// Phone viewport as WIDTHxHEIGHT@SCALE. Google Play screenshots: VIEWPORT=360x640@3 (1080×1920).
+const [, vw, vh, scale] = (process.env.VIEWPORT ?? '412x860@2').match(/^(\d+)x(\d+)@([\d.]+)$/).map(Number);
 mkdirSync(OUT, { recursive: true });
 
 const browser = await chromium.launch();
 // A real browser locale is required: Flutter's engine parses navigator.languages.
-const page = await (await browser.newContext({ viewport: { width: 412, height: 860 }, deviceScaleFactor: 2, locale: 'bn-BD' })).newPage();
+const page = await (await browser.newContext({ viewport: { width: vw, height: vh }, deviceScaleFactor: scale, locale: 'bn-BD' })).newPage();
 page.on('pageerror', (e) => console.log('PAGE ERROR', e.message));
 
 let n = 0;
@@ -58,7 +60,7 @@ async function fill(label, value) {
   await page.keyboard.type(value, { delay: 15 });
   await page.waitForTimeout(600);
 }
-const scroll = async (dy) => { await page.mouse.move(206, 500); await page.mouse.wheel(0, dy); await page.waitForTimeout(900); };
+const scroll = async (dy) => { await page.mouse.move(vw / 2, vh * 0.6); await page.mouse.wheel(0, dy); await page.waitForTimeout(900); };
 const back = async () => { await page.mouse.click(28, 28); await page.waitForTimeout(1200); }; // AppBar back arrow
 async function step(name, fn, { fromHome = true } = {}) {
   try {

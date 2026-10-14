@@ -1595,7 +1595,7 @@ abstract class AppLocalizations {
   /// No description provided for @serverAddressHint.
   ///
   /// In en, this message translates to:
-  /// **'For testing on a phone, use your computer\'s IP, e.g. http://192.168.0.10:8000/api/v1'**
+  /// **'Enter your server\'s API address, e.g. https://api.example.com/api/v1. The published app needs https; plain http (e.g. http://192.168.0.10:8000/api/v1) only works in debug builds.'**
   String get serverAddressHint;
 
   /// No description provided for @resetDefault.
@@ -1627,6 +1627,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Account'**
   String get account;
+
+  /// No description provided for @privacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy policy'**
+  String get privacyPolicy;
+
+  /// No description provided for @deleteAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete account'**
+  String get deleteAccount;
+
+  /// No description provided for @deleteAccountWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account, all your questions, photos and their answers will be deleted permanently. This cannot be undone. \"My crops\" saved on this phone stay.'**
+  String get deleteAccountWarning;
+
+  /// No description provided for @deleteAccountPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your PIN to confirm'**
+  String get deleteAccountPin;
+
+  /// No description provided for @deleteAccountConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete permanently'**
+  String get deleteAccountConfirm;
+
+  /// No description provided for @accountDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account has been deleted.'**
+  String get accountDeleted;
+
+  /// No description provided for @updateAppTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Please update the app'**
+  String get updateAppTitle;
+
+  /// No description provided for @updateAppText.
+  ///
+  /// In en, this message translates to:
+  /// **'This version is too old for some features (prices, questions). Install the new version from Google Play.'**
+  String get updateAppText;
+
+  /// No description provided for @updateApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get updateApp;
 }
 
 class _AppLocalizationsDelegate

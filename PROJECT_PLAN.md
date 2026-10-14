@@ -190,7 +190,9 @@ Features deliberately **left out** of the MVP: a marketplace (it needs logistics
 | FR-13 | Fertilizer calculator: crop + land size in shotok/katha/bigha/acre/hectare; kg per fertilizer, when to apply, cost at government price | ✅ |
 | FR-14 | What to plant now / harvest now by month, rooftop filter | ✅ |
 | FR-15 | Articles list (sorted for the user type) and reader with read-aloud | ✅ |
-| FR-16 | Settings: language, district, user type, text size, data saver, bigha size, sync now, account, server address | ✅ |
+| FR-16 | Settings: language, district, user type, text size, data saver, bigha size, sync now, account, server address, privacy policy | ✅ |
+| FR-17 | Delete my account in the app (PIN confirmation); removes profile, questions, photos and answers on the server and the user's questions on the phone | ✅ |
+| FR-18 | "Please update the app" banner with a Play Store link when the server's minimum app version is higher | ✅ |
 
 **API and admin panel**
 
@@ -207,6 +209,7 @@ Features deliberately **left out** of the MVP: a marketplace (it needs logistics
 | FR-28 | Alerts: severity, bilingual text, national or selected districts (division shortcut), start/end time | ✅ |
 | FR-29 | User and staff management with role rules (no self-demotion; only super admin manages admins); disabling revokes app tokens | ✅ |
 | FR-30 | `php artisan krishi:export-content` bundles the knowledge base and districts into the app | ✅ |
+| FR-31 | Public bilingual pages for app stores: privacy policy (`/privacy`) and account deletion without the app (`/account/delete`); admins can delete an app user's account on request | ✅ |
 
 ### 5.2 Non-functional requirements
 
@@ -359,6 +362,7 @@ Base URL: `/api/v1`. Full request and response examples are in **[docs/API.md](d
 | POST | `/auth/register`, `/auth/login` | – | Phone + PIN; returns token + user |
 | POST | `/auth/logout` | ✓ | Revoke current token |
 | GET / PATCH | `/me` | ✓ | Profile; change PIN needs the current PIN |
+| DELETE | `/me` | ✓ | Delete account and all data (PIN required) |
 | GET / POST | `/questions` | ✓ | My questions; ask (multipart: `body`, `crop_id`, `image`) |
 | GET | `/questions/{id}` | ✓ | Own question, or a public answered one |
 
@@ -425,7 +429,8 @@ app/
 ├── Models/           User, Division, District, Crop, CropStage, Problem, Fertilizer, CropFertilizerDose,
 │                     Article, Market, Commodity, MarketPrice, Question, Answer, Alert
 ├── Services/         ContentBundle, ContentVersion, PriceService, WeatherService,
-│                     FarmAdvisoryService (rules), ImageService (GD resize)
+│                     FarmAdvisoryService (rules), ImageService (GD resize),
+│                     PinAuthenticator (PIN check + lockout), AccountDeletionService
 ├── Support/          BanglaText (digits/phone), Media (URLs)
 ├── Http/
 │   ├── Controllers/Api/V1/   Meta, District, Content, Crop, Article, Market, Price, Weather, Alert,
@@ -433,15 +438,18 @@ app/
 │   ├── Controllers/Admin/    Auth, Dashboard, Crop, CropStage, CropFertilizerDose, Problem, Article,
 │   │                         Question, Price, Market, Commodity, Fertilizer, Alert, User
 │   ├── Controllers/MediaController.php     # serves uploads (no symlink needed on Windows)
+│   ├── Controllers/PublicPageController.php # /privacy and /account/delete (app-store requirements)
 │   ├── Requests/Api|Admin/   validation (Bangla digit + phone normalisation)
 │   ├── Resources/            JSON shapes (never leak phone numbers)
-│   └── Middleware/           EnsureUserIsActive, EnsureUserIsStaff, SecurityHeaders, OptimizeJsonResponse
+│   └── Middleware/           EnsureUserIsActive, EnsureUserIsStaff, SecurityHeaders, OptimizeJsonResponse,
+│                             SetApiLocale, SetPublicPageLocale
 ├── Providers/AppServiceProvider.php   # role Gates (permission table) + rate limiters
 config/krishi.php       # helpline, units, token TTL, weather, upload limits
 database/migrations/    # users, geography, knowledge, market, engagement
 database/seeders/       # Reference (geography, fertilizers, knowledge base, markets) + Demo
 database/seeders/data/  # crops_field.php, crops_garden.php, articles.php, geography.php ← edit content here
 resources/views/admin/  # layout, dashboard, crops, problems, articles, questions, prices, markets, …
+resources/views/public/ # privacy policy and account-deletion pages (Bangla, ?lang=en)
 routes/api.php, routes/web.php, routes/console.php (krishi:export-content)
 public/vendor/          # Bootstrap, icons, font (no CDN)
 tests/Unit, tests/Feature
@@ -563,6 +571,8 @@ flutter run -d emulator-5554       # Android emulator: uses http://10.0.2.2:8000
 | `APP_TIMEZONE` | `Asia/Dhaka` | Dates for prices and alerts |
 | `DB_*` | XAMPP defaults | Database connection |
 | `KRISHI_HELPLINE` | `16123` | Call-centre number shown in the app |
+| `KRISHI_OPERATOR_NAME` | `Krishi Sathi` | Organisation named in the privacy policy |
+| `KRISHI_SUPPORT_EMAIL` | – | Contact shown on `/privacy` and `/account/delete` (**set before publishing**) |
 | `KRISHI_BIGHA_DECIMAL` | `33` | Default bigha size in decimals (users can override) |
 | `KRISHI_MIN_APP_VERSION` | `1.0.0` | Lowest supported app version |
 | `KRISHI_TOKEN_TTL_DAYS` | `180` | App login lifetime |
@@ -602,9 +612,9 @@ flutter run -d emulator-5554       # Android emulator: uses http://10.0.2.2:8000
 | Suite | Count | Covers | Run |
 |---|---|---|---|
 | Laravel unit | 2 files | Bangla digit/phone normalisation; farm advisory rules (rain, storm, heat, cold, late blight, dry spell, bilingual output) | `php artisan test` |
-| Laravel feature | 7 files, **64 tests total** | Auth (Bangla digits, lockout, role escalation, disabled users), content (ETag/304, unpublished hidden, gzip, UTF-8), prices (trend, nearest market, history), questions (upload + resize, privacy, rate limit), weather (mocked provider, cache, stale fallback, 503), admin (role matrix, every page renders, user-role rules, price entry and CSV import, targeted alerts, expert answer reaching the app, path traversal) | Run on **SQLite and MariaDB** |
-| Flutter unit and repository | 2 files | Bangla numbers, **Bengali calendar incl. leap years**, land units, fertilizer maths, crop schedule; offline cache fallback, validation errors, ETag/304, question outbox | `flutter test` |
-| Flutter widget | 6 journeys, **20 tests total** | Onboarding, offline crop doctor, calculator, offline question queued, English UI, My crops | `flutter test` |
+| Laravel feature | 8 files, **70 tests total** | Auth (Bangla digits, lockout, role escalation, disabled users), account deletion (app, web form, admin; shared PIN lockout; staff protected), privacy page, content (ETag/304, unpublished hidden, gzip, UTF-8), prices (trend, nearest market, history), questions (upload + resize, privacy, rate limit), weather (mocked provider, cache, stale fallback, 503), admin (role matrix, every page renders, user-role rules, price entry and CSV import, targeted alerts, expert answer reaching the app, path traversal) | Run on **SQLite and MariaDB** |
+| Flutter unit and repository | 2 files | Bangla numbers, **Bengali calendar incl. leap years**, land units, fertilizer maths, crop schedule; offline cache fallback, validation errors, ETag/304, question outbox, account deletion, no-server mode | `flutter test` |
+| Flutter widget | 6 journeys, **25 tests total** | Onboarding, offline crop doctor, calculator, offline question queued, English UI, My crops | `flutter test` |
 | End-to-end | 1 script | Real browser: app + admin, full Q&A loop | `tools/e2e` |
 
 **Manual and field testing (pilot):**
@@ -625,9 +635,10 @@ flutter run -d emulator-5554       # Android emulator: uses http://10.0.2.2:8000
 
 **Mobile:**
 1. `php artisan krishi:export-content` with `APP_URL` set to production, then commit the refreshed seed.
-2. Android: set `applicationId` (currently `com.krishisathi.krishi_sathi`), create an upload keystore, then
+2. Android (app ID `com.krishisathi.app`): create an upload keystore and `android/key.properties`, then
    `flutter build appbundle --release --dart-define=API_BASE_URL=https://api.your-domain/api/v1`.
    Release through Play Console: internal → closed (pilot) → production.
+   Step-by-step guide, store listing text and Data safety answers: [`docs/ANDROID_RELEASE.md`](docs/ANDROID_RELEASE.md).
 3. iOS: open `ios/` in Xcode, set the bundle ID and signing, `flutter build ipa`, TestFlight.
 4. Web: `flutter build web --release --no-web-resources-cdn --dart-define=API_BASE_URL=…`, then host `build/web` on any static host (same domain as the API avoids CORS questions).
 
@@ -638,6 +649,7 @@ flutter run -d emulator-5554       # Android emulator: uses http://10.0.2.2:8000
 * **Brute-force protection:** per-IP throttles plus a per-phone lockout (5 wrong PINs → 15 minutes); admin login throttled.
 * **RBAC** with Gates on every admin route group. `role` and `is_active` are not mass-assignable; registration cannot escalate a role (tested). Admins cannot touch admin accounts; nobody can demote themselves.
 * Disabled users are blocked on every request; their app tokens are revoked.
+* **Account deletion** (Google Play policy): in the app (PIN), on the public web page `/account/delete` or by an admin on request. Deletes the profile, tokens, questions, photos and answers; staff accounts can only be disabled. A public privacy policy is served at `/privacy`.
 * Sanctum tokens expire (180 days); logout revokes the token.
 * Validation through Form Requests everywhere; Bangla digits and phone formats normalised first.
 * Uploads: image MIME + extension + size (≤ 5 MB) checks, random file names, **re-encoded with GD** (strips EXIF/GPS and any embedded payload), served through `/media` with path-traversal protection.

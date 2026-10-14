@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../core/config/app_config.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/utils/bangla.dart';
 import '../../core/utils/nav.dart';
@@ -114,6 +116,19 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ListView(
           padding: const EdgeInsets.fromLTRB(16, 12, 16, 32),
           children: [
+            if (reference.updateRequired && !kIsWeb)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: InfoBanner(
+                  level: 'warning',
+                  icon: '⬆️',
+                  title: l10n.updateAppTitle,
+                  text: l10n.updateAppText,
+                  trailing: defaultTargetPlatform == TargetPlatform.android
+                      ? TextButton(onPressed: () => openWebPage(Uri.parse(AppConfig.playStoreUrl)), child: Text(l10n.updateApp))
+                      : null,
+                ),
+              ),
             for (final alert in _alerts)
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),

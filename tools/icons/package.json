@@ -1,0 +1,12 @@
+{
+  "name": "krishi-sathi-icons",
+  "private": true,
+  "type": "module",
+  "description": "Renders the app icon and Play Store feature graphic, then resizes them for every platform.",
+  "scripts": {
+    "render": "node render.mjs && python3 make_icons.py"
+  },
+  "devDependencies": {
+    "playwright": "1.56.1"
+  }
+}

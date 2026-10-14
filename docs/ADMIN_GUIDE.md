@@ -112,6 +112,7 @@ Typical uses: flash flood in the haor ("harvest 80%-mature Boro now"), cyclone s
 * **Reset a farmer's PIN:** open the user → type a new 4–6 digit PIN in *Password / PIN* → Save. Tell the farmer the new PIN by phone.
 * **Disable an account:** untick *Account active*. The person is signed out of the app immediately.
 * Only a **super admin** can create or edit admin accounts. Nobody can change their own role or disable themselves.
+* **Delete an app user's account (on request):** people normally do this themselves (app → *Settings → Delete account*, or the web page `/account/delete`). If someone forgot their PIN and asks you to delete their account, first make sure the request really comes from that phone number (e.g. call it back), then open the user → **Delete account and all data**. Their profile, questions, photos and answers are removed permanently. Staff accounts cannot be deleted; disable them instead so their answers stay.
 
 ---
 

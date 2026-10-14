@@ -7,10 +7,9 @@ use App\Http\Requests\Api\LoginRequest;
 use App\Http\Requests\Api\RegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Services\PinAuthenticator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Validation\ValidationException;
 
 /**
@@ -18,15 +17,11 @@ use Illuminate\Validation\ValidationException;
  *
  * Why not SMS OTP? It costs money per message and needs an SMS gateway
  * contract. A 4–6 digit PIN (like bKash/Nagad) is familiar to rural users.
- * Brute force is limited per phone number (see ensureNotLockedOut).
+ * Brute force is limited per phone number (see PinAuthenticator).
  * An OTP step can be added later in register() without changing the app flow.
  */
 class AuthController extends Controller
 {
-    private const MAX_ATTEMPTS = 5;
-
-    private const LOCKOUT_SECONDS = 900; // 15 minutes
-
     public function register(RegisterRequest $request): JsonResponse
     {
         $data = $request->validated();
@@ -47,21 +42,10 @@ class AuthController extends Controller
         ], 201);
     }
 
-    public function login(LoginRequest $request): JsonResponse
+    public function login(LoginRequest $request, PinAuthenticator $pins): JsonResponse
     {
         $data = $request->validated();
-        $throttleKey = 'login:'.$data['phone'];
-
-        $this->ensureNotLockedOut($throttleKey);
-
-        $user = User::where('phone', $data['phone'])->first();
-
-        if (! $user || ! Hash::check($data['pin'], $user->password)) {
-            RateLimiter::hit($throttleKey, self::LOCKOUT_SECONDS);
-            throw ValidationException::withMessages([
-                'phone' => [__('Mobile number or PIN is incorrect.')],
-            ]);
-        }
+        $user = $pins->verify($data['phone'], $data['pin']);
 
         if (! $user->is_active) {
             throw ValidationException::withMessages([
@@ -69,7 +53,6 @@ class AuthController extends Controller
             ]);
         }
 
-        RateLimiter::clear($throttleKey);
         $user->forceFill(['last_login_at' => now()])->save();
 
         return response()->json([
@@ -92,15 +75,5 @@ class AuthController extends Controller
             ['app'],
             now()->addDays(config('krishi.token_ttl_days')),
         )->plainTextToken;
-    }
-
-    private function ensureNotLockedOut(string $key): void
-    {
-        if (RateLimiter::tooManyAttempts($key, self::MAX_ATTEMPTS)) {
-            $minutes = (int) ceil(RateLimiter::availableIn($key) / 60);
-            throw ValidationException::withMessages([
-                'phone' => [__('Too many wrong attempts. Try again in :minutes minutes.', ['minutes' => $minutes])],
-            ])->status(429);
-        }
     }
 }

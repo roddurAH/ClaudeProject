@@ -5,3 +5,6 @@ Thumbs.db
 .vscode/
 tools/e2e/node_modules/
 tools/e2e/screenshots/
+tools/icons/node_modules/
+tools/icons/out/
+tools/e2e/play/

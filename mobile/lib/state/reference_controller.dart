@@ -15,6 +15,9 @@ class ReferenceController extends ChangeNotifier {
 
   String get helpline => meta?.helpline ?? AppConfig.defaultHelpline;
 
+  /// The server no longer supports this app version (KRISHI_MIN_APP_VERSION).
+  bool get updateRequired => meta != null && AppConfig.isOlderVersion(AppConfig.appVersion, meta!.minAppVersion);
+
   District? districtById(int? id) {
     for (final d in districts) {
       if (d.id == id) return d;
