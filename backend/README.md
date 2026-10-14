@@ -22,6 +22,16 @@ To let a phone on your Wi-Fi reach the API: `php artisan serve --host=0.0.0.0 --
 
 Using XAMPP's Apache instead of `artisan serve`: point a virtual host's `DocumentRoot` to `backend/public` with `AllowOverride All`. No `storage:link` is needed; photos are served by the `/media/...` route.
 
+## Common setup errors
+
+| Error | Fix |
+|---|---|
+| `Failed opening required '…/vendor/autoload.php'` | Dependencies not installed yet: run `composer install` in `backend/` |
+| `composer` requires `ext-…` / `could not find driver` | Enable the extension in the `php.ini` of the PHP you are using (`php --ini` shows which file); see step 1 |
+| `No application encryption key has been specified` | `php artisan key:generate` |
+| `SQLSTATE[HY000] [1049] Unknown database 'krishi_sathi'` | Create the database (step 2) |
+| `SQLSTATE[HY000] [2002]` / connection refused | Start MySQL in the XAMPP Control Panel |
+
 ## Useful commands
 
 | | |
@@ -29,7 +39,7 @@ Using XAMPP's Apache instead of `artisan serve`: point a virtual host's `Documen
 | `php artisan migrate:fresh --seed` | Rebuild the database with reference **and demo** data |
 | `php artisan db:seed --class=ReferenceDataSeeder` | Reference data only (districts, knowledge base, markets): use for production |
 | `php artisan krishi:export-content` | Copy the knowledge base + districts into `../mobile/assets/seed/` for offline first launch |
-| `php artisan test` | 64 tests on in-memory SQLite |
+| `php artisan test` | 70 tests on in-memory SQLite |
 | `DB_CONNECTION=mysql DB_DATABASE=krishi_sathi_test php artisan test` | Same tests on MySQL (create that database first) |
 | `./vendor/bin/pint` | Code style |
 
