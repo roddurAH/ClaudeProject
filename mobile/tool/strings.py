@@ -275,6 +275,8 @@ S = [
     ("serverAddress", "Server address (advanced)", "সার্ভার ঠিকানা (উন্নত)"),
     ("serverAddressHint", "Enter your server's API address, e.g. https://api.example.com/api/v1. The Play Store app needs https; plain http (e.g. a laptop on the same Wi-Fi: http://192.168.0.10:8000/api/v1) only works in test builds.", "সার্ভারের API ঠিকানা দিন, যেমন https://api.example.com/api/v1। Play Store-এর অ্যাপে https লাগবে; সাধারণ http (যেমন একই Wi-Fi-তে থাকা ল্যাপটপ: http://192.168.0.10:8000/api/v1) শুধু টেস্ট বিল্ডে কাজ করে।"),
     ("resetDefault", "Reset to default", "আগের অবস্থায় ফেরান"),
+    ("serverConnected", "✓ Connected to the server.", "✓ সার্ভারের সাথে সংযোগ হয়েছে।"),
+    ("errorWrongServer", "No Krishi Sathi server found at this address. Check Settings → Server address, e.g. http://192.168.0.10:8000/api/v1", "এই ঠিকানায় কৃষি সাথী সার্ভার পাওয়া যায়নি। সেটিংস → সার্ভার ঠিকানা দেখুন, যেমন http://192.168.0.10:8000/api/v1"),
     ("about", "About", "অ্যাপ সম্পর্কে"),
     ("aboutText", "Krishi Sathi gives farmers and gardeners in Bangladesh simple advice on crops, pests, fertilizer, weather and market prices. The advice is general – for serious problems contact your Upazila Agriculture Office or call 16123.", "কৃষি সাথী বাংলাদেশের কৃষক ও বাগানিদের ফসল, পোকা-রোগ, সার, আবহাওয়া ও বাজারদর নিয়ে সহজ পরামর্শ দেয়। পরামর্শগুলো সাধারণ – গুরুতর সমস্যায় উপজেলা কৃষি অফিসে যোগাযোগ করুন বা ১৬১২৩ নম্বরে কল করুন।"),
     ("version", "Version {v}", "সংস্করণ {v}", ["v"]),

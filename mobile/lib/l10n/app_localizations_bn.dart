@@ -834,6 +834,13 @@ class AppLocalizationsBn extends AppLocalizations {
   String get resetDefault => 'আগের অবস্থায় ফেরান';
 
   @override
+  String get serverConnected => '✓ সার্ভারের সাথে সংযোগ হয়েছে।';
+
+  @override
+  String get errorWrongServer =>
+      'এই ঠিকানায় কৃষি সাথী সার্ভার পাওয়া যায়নি। সেটিংস → সার্ভার ঠিকানা দেখুন, যেমন http://192.168.0.10:8000/api/v1';
+
+  @override
   String get about => 'অ্যাপ সম্পর্কে';
 
   @override

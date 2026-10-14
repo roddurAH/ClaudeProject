@@ -133,6 +133,22 @@ void main() {
     expect(adapter.requests, isEmpty);
   });
 
+  test('an address that is not the API base gives a clear "wrong server" error', () async {
+    // Laravel answers a missing route with 404 "The route … could not be found."
+    final (api, _) = fakeApiClient((o) async => json({'message': 'The route auth/login could not be found.'}, status: 404));
+    await expectLater(api.post('/auth/login'), throwsA(isA<ApiException>().having((e) => e.type, 'type', ApiErrorType.wrongServer)));
+
+    // Another web server answering with an HTML page.
+    final (html, _) = fakeApiClient((o) async => ResponseBody.fromString('<html>It works!</html>', 200, headers: {
+          Headers.contentTypeHeader: ['text/html'],
+        }));
+    await expectLater(html.get('/meta'), throwsA(isA<ApiException>().having((e) => e.type, 'type', ApiErrorType.wrongServer)));
+
+    // A real "not found" from the API stays notFound.
+    final (missing, _) = fakeApiClient((o) async => json({'message': 'Not found.'}, status: 404));
+    await expectLater(missing.get('/questions/9'), throwsA(isA<ApiException>().having((e) => e.type, 'type', ApiErrorType.notFound)));
+  });
+
   group('delete account', () {
     Future<LocalStore> signedInStore() async {
       final store = LocalStore.memory();

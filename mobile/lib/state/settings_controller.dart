@@ -51,5 +51,8 @@ class SettingsController extends ChangeNotifier {
 
   String? get apiBaseUrlOverride => _get<String>('api_base_url');
   String get apiBaseUrl => (apiBaseUrlOverride?.isNotEmpty ?? false) ? apiBaseUrlOverride! : AppConfig.defaultApiBaseUrl();
-  Future<void> setApiBaseUrl(String? value) => _set('api_base_url', (value == null || value.trim().isEmpty) ? null : value.trim());
+  Future<void> setApiBaseUrl(String? value) {
+    final normalized = AppConfig.normalizeApiBaseUrl(value ?? '');
+    return _set('api_base_url', normalized.isEmpty ? null : normalized);
+  }
 }

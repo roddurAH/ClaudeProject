@@ -76,7 +76,12 @@ class ApiClient {
           ...?headers,
         }),
       );
-      return ApiResponse(response.statusCode ?? 200, response.data, response.headers);
+      final body = response.data;
+      if (body is String && body.trim().isNotEmpty) {
+        // An HTML page (another web server, a router, a captive portal) instead of our JSON.
+        throw ApiException(ApiErrorType.wrongServer, statusCode: response.statusCode, message: 'Not a Krishi Sathi API response');
+      }
+      return ApiResponse(response.statusCode ?? 200, body, response.headers);
     } on DioException catch (e) {
       throw _map(e);
     }
@@ -99,7 +104,10 @@ class ApiClient {
             errors[k.toString()] = v is List ? v.map((m) => m.toString()).toList() : [v.toString()];
           });
         }
-        final type = switch (status) {
+        // A missing route means the address is not the API base (…/api/v1).
+        final wrongAddress = (status == 404 || status == 405) &&
+            (body is! Map || (message ?? '').startsWith('The route ') || (message ?? '').contains('method is not supported'));
+        final type = wrongAddress ? ApiErrorType.wrongServer : switch (status) {
           401 => ApiErrorType.unauthorized,
           403 => ApiErrorType.forbidden,
           404 => ApiErrorType.notFound,

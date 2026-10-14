@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 
 import '../core/network/api_client.dart';
+import '../core/network/api_exception.dart';
 import '../core/storage/local_store.dart';
 import '../models/reference.dart';
 import 'cached_fetch.dart';
@@ -39,6 +40,16 @@ class ReferenceRepository {
   }
 
   AppMeta? localMeta() => peekCache(_store, 'meta', (j) => AppMeta.fromJson(j as Map<String, dynamic>))?.data;
+
+  /// Asks the server directly (no cached fallback), to check a new address.
+  Future<AppMeta> checkServer() async {
+    final json = (await _api.get('/meta')).data;
+    if (json is! Map<String, dynamic> || !json.containsKey('content_version')) {
+      throw ApiException(ApiErrorType.wrongServer, message: 'Not a Krishi Sathi server');
+    }
+    await _store.writeCache('meta', json);
+    return AppMeta.fromJson(json);
+  }
 
   Future<AppMeta> refreshMeta() async {
     final result = await cachedFetch(

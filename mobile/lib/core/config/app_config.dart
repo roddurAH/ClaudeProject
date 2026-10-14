@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 
+import '../utils/bangla.dart';
+
 /// Build-time and default configuration.
 ///
 /// The API address can be set three ways (first match wins):
@@ -40,6 +42,28 @@ class AppConfig {
       return 'http://10.0.2.2:8000/api/v1';
     }
     return 'http://localhost:8000/api/v1';
+  }
+
+  /// Turns what people actually type into the API base address:
+  /// `192.168.0.10:8000`, `http://192.168.0.10:8000/`, `…/api`, `…/api/v1/meta`
+  /// (the test link) all become `http://192.168.0.10:8000/api/v1`.
+  /// Bangla digits are accepted. Empty input stays empty.
+  static String normalizeApiBaseUrl(String input) {
+    var text = Bangla.toAscii(input.trim()).replaceAll(' ', '');
+    if (text.isEmpty) return '';
+    if (!text.contains('://')) text = 'http://$text';
+    final uri = Uri.tryParse(text);
+    if (uri == null || uri.host.isEmpty) return text;
+    var path = uri.path.replaceAll(RegExp(r'/+$'), '');
+    final api = path.indexOf('/api/v1');
+    if (api >= 0) {
+      path = path.substring(0, api + '/api/v1'.length);
+    } else if (path.endsWith('/api')) {
+      path = '$path/v1';
+    } else {
+      path = '$path/api/v1';
+    }
+    return Uri(scheme: uri.scheme, host: uri.host, port: uri.hasPort ? uri.port : null, path: path).toString();
   }
 
   /// True when [version] is lower than [minimum] ("1.2.10" vs "1.10.0" compares numerically).

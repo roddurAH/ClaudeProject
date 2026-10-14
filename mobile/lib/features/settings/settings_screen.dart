@@ -269,6 +269,7 @@ class _ServerAddressEditor extends StatefulWidget {
 
 class _ServerAddressEditorState extends State<_ServerAddressEditor> {
   late final _controller = TextEditingController(text: widget.settings.apiBaseUrl);
+  bool _checking = false;
 
   @override
   void dispose() {
@@ -294,14 +295,30 @@ class _ServerAddressEditorState extends State<_ServerAddressEditor> {
         ),
         const Spacer(),
         FilledButton(
-          onPressed: () async {
-            await widget.settings.setApiBaseUrl(_controller.text);
-            if (!context.mounted) return;
-            context.read<ContentController>().sync();
-            context.read<ReferenceController>().refresh();
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.save)));
-          },
-          child: Text(l10n.save),
+          onPressed: _checking
+              ? null
+              : () async {
+                  await widget.settings.setApiBaseUrl(_controller.text);
+                  _controller.text = widget.settings.apiBaseUrl; // show the cleaned-up address
+                  if (!context.mounted) return;
+                  setState(() => _checking = true);
+                  final reference = context.read<ReferenceController>();
+                  final content = context.read<ContentController>();
+                  final problem = await reference.checkServer();
+                  if (!context.mounted) return;
+                  setState(() => _checking = false);
+                  if (problem == null) {
+                    content.sync();
+                    reference.refresh();
+                  }
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(problem == null ? l10n.serverConnected : friendlyError(problem, l10n)),
+                    duration: const Duration(seconds: 6),
+                  ));
+                },
+          child: _checking
+              ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
+              : Text(l10n.save),
         ),
       ]),
     ]);

@@ -833,6 +833,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get resetDefault => 'Reset to default';
 
   @override
+  String get serverConnected => '✓ Connected to the server.';
+
+  @override
+  String get errorWrongServer =>
+      'No Krishi Sathi server found at this address. Check Settings → Server address, e.g. http://192.168.0.10:8000/api/v1';
+
+  @override
   String get about => 'About';
 
   @override

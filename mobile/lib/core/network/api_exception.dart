@@ -1,6 +1,6 @@
 /// Every failure from the API is turned into one of these, so screens can
 /// show a clear, translated message instead of a technical error.
-enum ApiErrorType { network, unauthorized, forbidden, notFound, validation, rateLimited, server, unknown }
+enum ApiErrorType { network, unauthorized, forbidden, notFound, validation, rateLimited, server, wrongServer, unknown }
 
 class ApiException implements Exception {
   ApiException(this.type, {this.message, this.statusCode, this.fieldErrors = const {}});

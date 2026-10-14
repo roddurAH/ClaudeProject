@@ -28,6 +28,7 @@ On your own computer: `KRISHI_ALLOW_HTTP=true flutter build apk --release` in `m
 1. Phone and laptop on the **same Wi-Fi**.
 2. In `backend/`: `php artisan serve --host=0.0.0.0 --port=8000`. Find the laptop's IP with `ipconfig` (e.g. `192.168.0.10`) and allow port 8000 in Windows Firewall.
 3. In the app: **Settings → Server address (advanced)** → `http://192.168.0.10:8000/api/v1` → Save.
+   Typing just `192.168.0.10:8000` is enough: the app completes the address, tests it and shows **✓ Connected** or what is wrong.
 
 Without a server the app still works offline (crop doctor, calendar, calculator, articles). Prices, weather, alerts and *Ask an expert* need the server.
 Test APKs allow plain `http` and use a debug key, so **never upload them to Google Play**.

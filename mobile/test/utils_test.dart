@@ -15,6 +15,24 @@ void main() {
     expect(AppConfig.isOlderVersion('1.0.0', 'garbage'), isFalse);
   });
 
+  test('server address is forgiving about what people type', () {
+    const api = 'http://192.168.0.10:8000/api/v1';
+    for (final typed in [
+      '192.168.0.10:8000',
+      'http://192.168.0.10:8000',
+      ' http://192.168.0.10:8000/ ',
+      'http://192.168.0.10:8000/api',
+      'http://192.168.0.10:8000/api/v1/',
+      'http://192.168.0.10:8000/api/v1/meta',
+      '১৯২.১৬৮.০.১০:৮০০০',
+    ]) {
+      expect(AppConfig.normalizeApiBaseUrl(typed), api, reason: typed);
+    }
+    expect(AppConfig.normalizeApiBaseUrl('https://krishi.example.com/api/v1'), 'https://krishi.example.com/api/v1');
+    expect(AppConfig.normalizeApiBaseUrl('https://example.com/krishi/public'), 'https://example.com/krishi/public/api/v1');
+    expect(AppConfig.normalizeApiBaseUrl('  '), '');
+  });
+
   test('public web pages live next to the API', () {
     expect(AppConfig.webPageUri('https://krishi.example.com/api/v1/', '/privacy').toString(), 'https://krishi.example.com/privacy');
     expect(AppConfig.webPageUri('https://example.com/krishi/api/v1', '/privacy', language: 'en').toString(),

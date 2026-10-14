@@ -16,7 +16,9 @@ String friendlyError(Object error, AppLocalizations l10n) {
       ApiErrorType.rateLimited => error.firstMessage ?? l10n.errorTooMany,
       ApiErrorType.unauthorized || ApiErrorType.forbidden => l10n.errorSessionExpired,
       ApiErrorType.validation => error.firstMessage ?? l10n.errorGeneric,
-      _ => l10n.errorGeneric,
+      ApiErrorType.wrongServer => l10n.errorWrongServer,
+      // The code helps whoever runs the server to find the cause.
+      _ => error.statusCode == null ? l10n.errorGeneric : '${l10n.errorGeneric} (HTTP ${error.statusCode})',
     };
   }
   return l10n.errorGeneric;

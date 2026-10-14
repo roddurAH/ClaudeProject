@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import '../core/config/app_config.dart';
+import '../core/network/api_exception.dart';
 import '../data/reference_repository.dart';
 import '../models/reference.dart';
 
@@ -30,6 +31,17 @@ class ReferenceController extends ChangeNotifier {
     meta = _repo.localMeta();
     notifyListeners();
     refresh();
+  }
+
+  /// Null when the server answers, otherwise the reason it does not.
+  Future<ApiException?> checkServer() async {
+    try {
+      meta = await _repo.checkServer();
+      notifyListeners();
+      return null;
+    } on ApiException catch (e) {
+      return e;
+    }
   }
 
   Future<void> refresh() async {

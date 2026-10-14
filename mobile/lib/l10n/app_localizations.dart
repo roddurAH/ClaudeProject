@@ -1604,6 +1604,18 @@ abstract class AppLocalizations {
   /// **'Reset to default'**
   String get resetDefault;
 
+  /// No description provided for @serverConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'✓ Connected to the server.'**
+  String get serverConnected;
+
+  /// No description provided for @errorWrongServer.
+  ///
+  /// In en, this message translates to:
+  /// **'No Krishi Sathi server found at this address. Check Settings → Server address, e.g. http://192.168.0.10:8000/api/v1'**
+  String get errorWrongServer;
+
   /// No description provided for @about.
   ///
   /// In en, this message translates to:
